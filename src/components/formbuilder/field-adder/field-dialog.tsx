@@ -28,7 +28,7 @@ function FieldDialog({ defaultField }: Props) {
         <Button
           size={defaultField ? "sm" : "default"}
           variant="outline"
-          className="w-full"
+          className={defaultField ? "" : "w-full bg-background-card"}
         >
           {defaultField ? "Edit" : "Add Field"}
         </Button>

@@ -15,6 +15,7 @@ const FieldTypes = [
 const baseSchema = z.object({
   id: z.string(),
   type: z.enum(FieldTypes),
+  columns: z.coerce.number().optional(),
   label: z
     .string()
     .trim()
