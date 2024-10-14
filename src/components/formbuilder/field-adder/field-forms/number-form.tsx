@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 
 function NumberForm({ defaultField, handleAdd }: FormProps) {
   if (defaultField && defaultField.type !== "number")
@@ -26,6 +27,7 @@ function NumberForm({ defaultField, handleAdd }: FormProps) {
     defaultValues: {
       label: defaultField?.label ?? "",
       required: defaultField?.required ?? false,
+      description: defaultField?.description ?? "",
       min: defaultField?.min ?? "",
       max: defaultField?.max ?? "",
     },
@@ -54,7 +56,7 @@ function NumberForm({ defaultField, handleAdd }: FormProps) {
           name="label"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Label</FormLabel>
+              <FormLabel>Label*</FormLabel>
               <FormControl>
                 <Input placeholder="Age" {...field} />
               </FormControl>
@@ -74,6 +76,20 @@ function NumberForm({ defaultField, handleAdd }: FormProps) {
                   checked={field.value}
                   onCheckedChange={field.onChange}
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea {...field} placeholder="Optional description" />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -15,6 +15,9 @@ export const saveForm = protectedActionClient
       data: {
         title: parsedInput.title,
         content: JSON.stringify(parsedInput.form),
+        columns: parsedInput.columns,
+        description: parsedInput.description,
+        image: parsedInput.image,
         userId: ctx.userId,
         status: "DRAFT",
       },
@@ -33,6 +36,9 @@ export const updateForm = protectedActionClient
       where: { id: parsedInput.id },
       data: {
         title: parsedInput.form.title,
+        columns: parsedInput.form.columns,
+        description: parsedInput.form.description,
+        image: parsedInput.form.image,
         content: JSON.stringify(parsedInput.form.form),
       },
     });

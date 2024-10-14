@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -84,7 +85,7 @@ function FormRenderer(props: Props) {
     <Form {...f}>
       <form
         onSubmit={f.handleSubmit(onSubmit)}
-        className="mx-auto grid w-full max-w-3xl gap-8 py-4"
+        className="mx-auto grid w-full max-w-3xl gap-y-8 py-4"
       >
         {props.form.map((formField, i) => {
           const label = formField.label as keyof typeof schema;
@@ -97,7 +98,8 @@ function FormRenderer(props: Props) {
                 name={label}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{label}</FormLabel>
+                    <FormLabel className="text-base">{label}</FormLabel>
+                    <FormDescription>{formField.description}</FormDescription>
                     <FormControl>
                       <Input
                         placeholder={formField.placeholder}
@@ -119,7 +121,8 @@ function FormRenderer(props: Props) {
                 name={label}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{label}</FormLabel>
+                    <FormLabel className="text-base">{label}</FormLabel>
+                    <FormDescription>{formField.description}</FormDescription>
                     <FormControl>
                       <Input
                         type="number"
@@ -144,7 +147,8 @@ function FormRenderer(props: Props) {
                 name={label}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{label}</FormLabel>
+                    <FormLabel className="text-base">{label}</FormLabel>
+                    <FormDescription>{formField.description}</FormDescription>
                     <FormControl>
                       <Textarea
                         placeholder={formField.placeholder}
@@ -166,15 +170,18 @@ function FormRenderer(props: Props) {
                 control={f.control}
                 name={label}
                 render={({ field }) => (
-                  <FormItem className="flex items-center gap-2">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value as boolean | undefined}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormLabel>{label}</FormLabel>
+                  <FormItem>
+                    <div className="flex items-center gap-2">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value as boolean | undefined}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormLabel className="text-base">{label}</FormLabel>
+                    </div>
                     <FormMessage />
+                    <FormDescription>{formField.description}</FormDescription>
                   </FormItem>
                 )}
               />
@@ -188,7 +195,8 @@ function FormRenderer(props: Props) {
                 name={label}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{label}</FormLabel>
+                    <FormLabel className="text-base">{label}</FormLabel>
+                    <FormDescription>{formField.description}</FormDescription>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value as string}
@@ -223,8 +231,9 @@ function FormRenderer(props: Props) {
                 control={f.control}
                 name={label}
                 render={({ field }) => (
-                  <FormItem className="space-y-3">
-                    <FormLabel>{label}</FormLabel>
+                  <FormItem>
+                    <FormLabel className="text-base">{label}</FormLabel>
+                    <FormDescription>{formField.description}</FormDescription>
                     <FormControl>
                       <RadioGroup
                         onValueChange={field.onChange}

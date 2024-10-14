@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 
 function RadioForm({ defaultField, handleAdd }: FormProps) {
   if (defaultField && defaultField.type !== "radio")
@@ -27,6 +28,7 @@ function RadioForm({ defaultField, handleAdd }: FormProps) {
       label: defaultField?.label ?? "",
       required: defaultField?.required ?? false,
       options: defaultField?.options ?? [{ value: "" }],
+      description: defaultField?.description ?? "",
     },
   });
 
@@ -58,7 +60,7 @@ function RadioForm({ defaultField, handleAdd }: FormProps) {
           name="label"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Label</FormLabel>
+              <FormLabel>Label*</FormLabel>
               <FormControl>
                 <Input placeholder="Name" {...field} />
               </FormControl>
@@ -84,8 +86,22 @@ function RadioForm({ defaultField, handleAdd }: FormProps) {
           )}
         />
 
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea {...field} placeholder="Optional description" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <div>
-          <FormLabel className="mb-2">Options</FormLabel>
+          <FormLabel className="mb-2">Options*</FormLabel>
           {fields.map((option, index) => (
             <div key={option.id} className="mb-2 flex items-center gap-2">
               <FormField

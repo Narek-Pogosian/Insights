@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 
 function TextAreaForm({ defaultField, handleAdd }: FormProps) {
   if (defaultField && defaultField.type !== "textarea")
@@ -28,6 +29,7 @@ function TextAreaForm({ defaultField, handleAdd }: FormProps) {
       label: defaultField?.label ?? "",
       placeholder: defaultField?.placeholder ?? "",
       required: defaultField?.required ?? false,
+      description: defaultField?.description ?? "",
       minLength: defaultField?.minLength ?? 0,
       maxLength: defaultField?.maxLength ?? MAX_LENGTH_TEXTAREA,
     },
@@ -56,7 +58,7 @@ function TextAreaForm({ defaultField, handleAdd }: FormProps) {
           name="label"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Label</FormLabel>
+              <FormLabel>Label*</FormLabel>
               <FormControl>
                 <Input placeholder="Your bio" {...field} />
               </FormControl>
@@ -70,7 +72,7 @@ function TextAreaForm({ defaultField, handleAdd }: FormProps) {
           name="placeholder"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Placeholder</FormLabel>
+              <FormLabel>Placeholder*</FormLabel>
               <FormControl>
                 <Input placeholder="I am a ..." {...field} />
               </FormControl>
@@ -90,6 +92,20 @@ function TextAreaForm({ defaultField, handleAdd }: FormProps) {
                   checked={field.value}
                   onCheckedChange={field.onChange}
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea {...field} placeholder="Optional description" />
               </FormControl>
               <FormMessage />
             </FormItem>

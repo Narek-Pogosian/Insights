@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 
 function TextForm({ defaultField, handleAdd }: FormProps) {
   if (defaultField && defaultField.type !== "checkbox")
@@ -25,6 +25,7 @@ function TextForm({ defaultField, handleAdd }: FormProps) {
     resolver: zodResolver(checkboxFormSchema),
     defaultValues: {
       label: defaultField?.label ?? "",
+      description: defaultField?.description ?? "",
       required: false,
     },
   });
@@ -52,7 +53,7 @@ function TextForm({ defaultField, handleAdd }: FormProps) {
           name="label"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Label</FormLabel>
+              <FormLabel>Label*</FormLabel>
               <FormControl>
                 <Input placeholder="Name" {...field} />
               </FormControl>
@@ -63,15 +64,12 @@ function TextForm({ defaultField, handleAdd }: FormProps) {
 
         <FormField
           control={form.control}
-          name="required"
+          name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Required</FormLabel>
+              <FormLabel>Description</FormLabel>
               <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
+                <Textarea {...field} placeholder="Optional description" />
               </FormControl>
               <FormMessage />
             </FormItem>

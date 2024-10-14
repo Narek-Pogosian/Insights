@@ -105,7 +105,7 @@ function Field({ field, className }: FieldProps) {
       >
         <div className="flex flex-col gap-4 pl-4 sm:flex-row">
           <Grip className="mt-1 size-5 text-foreground-muted" />
-          <div className="grow">
+          <div className="grow sm:pr-36">
             <h3 className="font-bold capitalize lg:text-lg">{field.label}</h3>
             <p className="font-medium capitalize text-foreground-muted">
               {field.type}
@@ -114,7 +114,7 @@ function Field({ field, className }: FieldProps) {
         </div>
       </div>
 
-      <div className="absolute right-4 flex h-fit items-center gap-2 pt-4">
+      <div className="absolute right-4 flex h-fit w-32 items-center gap-2 pt-4">
         <FieldDialog defaultField={field} />
         <Button
           onClick={handleRemove}

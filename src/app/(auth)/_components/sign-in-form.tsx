@@ -110,7 +110,12 @@ function SignInForm() {
           </Alert>
         )}
 
-        <Button type="submit" className="mt-2" aria-disabled={isSigningIn}>
+        <Button
+          type="submit"
+          loading={isSigningIn}
+          className="mt-2"
+          aria-disabled={isSigningIn}
+        >
           {isSigningIn ? "Loading..." : "Sign in"}
         </Button>
 
