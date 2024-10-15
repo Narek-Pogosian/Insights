@@ -2,16 +2,17 @@
 
 import { type Status, type Form } from "@prisma/client";
 import { useMemo, useState } from "react";
-import { Squirrel } from "lucide-react";
+import { PlusCircle, Search, Squirrel } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import SurveyCard from "./survey-card";
+import Link from "next/link";
 
 interface SurveysListProps {
   surveys: Form[];
 }
 
-type S = { status: Status | ""; label: string };
-const statusList: S[] = [
+const statusList: { status: Status | ""; label: string }[] = [
   { status: "", label: "All" },
   { status: "PUBLISHED", label: "Published" },
   { status: "DRAFT", label: "Draft" },
@@ -34,28 +35,39 @@ function SurveysList({ surveys }: SurveysListProps) {
 
   return (
     <>
-      <div className="mb-6 flex items-center gap-2 [&>*]:h-9">
-        <Input
-          id="title"
-          aria-label="Title"
-          placeholder="Search by title"
-          className="w-[280px] bg-background-input text-sm font-semibold dark:bg-background-card"
-          value={titleQuery}
-          onChange={(e) => setTitleQuery(e.target.value)}
-        />
-        <select
-          id="status"
-          aria-label="Status"
-          className="rounded border bg-background-input px-2 text-sm font-semibold outline-none focus-visible:ring-2 focus-visible:ring-primary dark:bg-background-card"
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-        >
-          {statusList.map((s) => (
-            <option key={s.status} value={s.status}>
-              {s.label}
-            </option>
-          ))}
-        </select>
+      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="relative">
+            <Search className="text-muted-foreground absolute left-2.5 top-3 h-4 w-4" />
+            <Input
+              id="title"
+              aria-label="Title"
+              placeholder="Search by title"
+              className="h-10 w-[280px] bg-background-input pl-8 text-sm shadow-sm dark:bg-background-card dark:shadow dark:shadow-black"
+              value={titleQuery}
+              onChange={(e) => setTitleQuery(e.target.value)}
+            />
+          </div>
+          <select
+            id="status"
+            aria-label="Status"
+            className="h-10 rounded border bg-background-input px-2 text-sm shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-primary dark:bg-background-card dark:shadow dark:shadow-black"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            {statusList.map((s) => (
+              <option key={s.status} value={s.status}>
+                {s.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <Button asChild className="h-10 w-fit">
+          <Link href="/create">
+            <PlusCircle className="mr-2 h-4 w-4" />
+            Create New Survey
+          </Link>
+        </Button>
       </div>
 
       {filteredSurvey.length === 0 ? (
@@ -64,7 +76,7 @@ function SurveysList({ surveys }: SurveysListProps) {
           Empty. No surveys here.
         </div>
       ) : (
-        <ul className="grid gap-8 md:grid-cols-2">
+        <ul className="grid gap-4 md:grid-cols-2">
           {filteredSurvey.map((survey) => (
             <SurveyCard survey={survey} key={survey.id} />
           ))}

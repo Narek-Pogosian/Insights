@@ -1,6 +1,7 @@
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { type Status, type Form } from "@prisma/client";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import UncancelButton from "./uncancel-button";
 import CancelFormDialog from "./cancel-form-dialog";
 import DeleteFormDialog from "./delete-form-dialog";
@@ -16,16 +17,32 @@ function SurveyCard({ survey }: Props) {
   return (
     <Card key={survey.id}>
       <CardHeader>
-        <Link
-          href={
-            survey.status !== "DRAFT"
-              ? `/surveys/${survey.id}`
-              : `/surveys/${survey.id}/edit`
-          }
-        >
-          <CardTitle>{survey.title}</CardTitle>
-        </Link>
-        <SurveyStatusBadge status={survey.status} />
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href={
+              survey.status !== "DRAFT"
+                ? `/surveys/${survey.id}`
+                : `/surveys/${survey.id}/edit`
+            }
+          >
+            <CardTitle>{survey.title}</CardTitle>
+          </Link>
+          <Badge
+            className="w-fit capitalize"
+            variant={
+              survey.status === "PUBLISHED"
+                ? "default"
+                : survey.status === "DRAFT"
+                  ? "outline"
+                  : "destructive"
+            }
+          >
+            {survey.status.toLocaleLowerCase()}
+          </Badge>
+        </div>
+        <p className="text-sm text-foreground-muted">
+          {survey.createdAt.toDateString()}
+        </p>
       </CardHeader>
 
       <CardFooter className="mt-4 flex justify-between">
@@ -37,24 +54,6 @@ function SurveyCard({ survey }: Props) {
 }
 
 export default SurveyCard;
-
-function SurveyStatusBadge({ status }: { status: Status }) {
-  if (status == "CANCELLED") {
-    return (
-      <p className="text-xs font-semibold text-red-600 dark:text-red-400">
-        Cancelled
-      </p>
-    );
-  }
-  if (status == "PUBLISHED") {
-    return (
-      <p className="text-xs font-semibold text-blue-600 dark:text-blue-400">
-        Published
-      </p>
-    );
-  }
-  return <p className="text-xs font-semibold text-foreground-muted">Draft</p>;
-}
 
 function SurveyActionButtons({ status, id }: { status: Status; id: string }) {
   if (status == "DRAFT") {

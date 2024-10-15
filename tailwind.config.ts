@@ -26,8 +26,6 @@ const config = {
       black: colors.black,
       white: colors.white,
       neutral: colors.zinc,
-      amber: colors.amber,
-      blue: colors.blue,
       red: colors.red,
     },
     extend: {
