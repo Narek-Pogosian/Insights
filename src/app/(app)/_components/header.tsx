@@ -4,10 +4,10 @@ import MobileSidebar from "./mobile-sidebar";
 import ThemeToggle from "@/components/theme-toggle";
 import Logo from "@/components/logo";
 import Link from "next/link";
+import Signout from "./signout";
 import { getNavigationList } from "./navigation";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import Signout from "./signout";
 
 function Header() {
   const pathname = usePathname();
@@ -16,7 +16,7 @@ function Header() {
   return (
     <header className="relative border-b bg-white dark:bg-neutral-950">
       <div className="container flex h-14 items-center justify-between">
-        <div className="flex h-full items-center gap-12">
+        <div className="flex h-full items-center gap-8">
           <Link href="/">
             <Logo />
           </Link>
@@ -34,7 +34,7 @@ function Header() {
                   )}
                 >
                   <Link
-                    className="rounded px-3 py-1.5 transition-colors hover:bg-accent"
+                    className="rounded px-3 py-1.5 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900"
                     href={item.href}
                   >
                     {item.label}

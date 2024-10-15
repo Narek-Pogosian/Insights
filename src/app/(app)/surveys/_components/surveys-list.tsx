@@ -62,7 +62,7 @@ function SurveysList({ surveys }: SurveysListProps) {
             ))}
           </select>
         </div>
-        <Button asChild className="h-10 w-fit">
+        <Button asChild className="w-fit shadow dark:shadow-black">
           <Link href="/create">
             <PlusCircle className="mr-2 h-4 w-4" />
             Create New Survey

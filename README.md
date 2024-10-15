@@ -1,26 +1,27 @@
 # 📊 Insights: Survey Creation App
 
-Welcome to **Insights**, a survey creation application currently in development! This app empowers users to easily create, share, and collect feedback from surveys.
+Welcome to **Insights**, this app empowers users to easily create, share, and collect feedback from surveys.
 
-## 🚀 Features
+## 🚀 Key Features
 
-- **User Authentication**: Secure sign-up and login system for users.
 - **Survey Creation and Editing**: Easily create and modify surveys with a user-friendly interface.
 - **Single Response Limitation**: Each participant can respond to a survey only once based on their IP address.
 - **CSV Export**: Download all survey responses in CSV format for analysis.
+- **User Authentication**: Secure sign-up and login system for users.
 
-## 🌟 Upcoming Features
+## 🌟 Project Status
 
-- **Advanced Survey Types**: Implementing features for multi-column surveys and other field types.
-- **Enhanced Dashboard**: A complete dashboard to visualize survey performance, including response rates.
+This project is currently inactive as I have chosen to shift my focus towards exploring technologies beyond Next.js and React. Throughout the development of this project, I have gained significant insights and proficiency with Next.js.
+
+In retrospect, there are several aspects I would approach differently. For instance, I would prioritize planning the user experience for the survey creation components. Additionally, I would consider utilizing tRPC instead of server actions, as it simplifies client-side code for data fetching and revalidation, which may be more suited to this project's needs.
 
 ## 🛠️ Technologies Used
 
-- **Framework**: [Next.js](https://nextjs.org/)
 - **UI**: [Shadcn](https://ui.shadcn.com/)
+- **Framework**: [Next.js](https://nextjs.org/)
 - **Database**: [MongoDB](https://www.mongodb.com/)
 - **Authentication**: [Next Auth](https://next-auth.js.org/)
-- **Dnd**: [dnd kit](https://dndkit.com/) 
+- **Dnd**: [dnd kit](https://dndkit.com/)
 
 ## 📚 Development Progress
 

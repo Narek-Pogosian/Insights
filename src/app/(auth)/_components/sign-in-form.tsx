@@ -115,6 +115,7 @@ function SignInForm() {
           loading={isSigningIn}
           className="mt-2"
           aria-disabled={isSigningIn}
+          disabled
         >
           {isSigningIn ? "Loading..." : "Sign in"}
         </Button>

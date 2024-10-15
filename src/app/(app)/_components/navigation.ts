@@ -1,21 +1,21 @@
-import { LayoutGrid, Library, SquarePen } from "lucide-react";
+import { Library, SquarePen } from "lucide-react";
 
 export function getNavigationList(pathname: string) {
   return [
     {
       href: "/",
-      label: "Overview",
-      active: pathname === "/",
-      icon: LayoutGrid,
-      submenus: [],
-    },
-    {
-      href: "/surveys",
       label: "Surveys",
-      active: pathname.startsWith("/surveys"),
+      active: pathname === "/",
       icon: Library,
       submenus: [],
     },
+    // {
+    //   href: "/surveys",
+    //   label: "Surveys",
+    //   active: pathname.startsWith("/surveys"),
+    //   icon: Library,
+    //   submenus: [],
+    // },
     {
       href: "/create",
       label: "Create",

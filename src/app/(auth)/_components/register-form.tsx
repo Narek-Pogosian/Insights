@@ -170,6 +170,7 @@ function RegisterForm() {
           className="mt-2"
           aria-disabled={isSigningIn}
           loading={isSigningIn}
+          disabled
         >
           {isSigningIn ? "Loading..." : "Register"}
         </Button>
