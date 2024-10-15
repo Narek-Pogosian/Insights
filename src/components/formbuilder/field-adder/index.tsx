@@ -69,7 +69,7 @@ function FieldAdder({ defaultField, closeDialog }: Props) {
 
   if (!fieldType) {
     return (
-      <ul className="flex flex-wrap gap-2">
+      <ul className="flex flex-wrap justify-center gap-2">
         {Object.entries(forms).map(([type, value]) => (
           <li key={type}>
             <Button

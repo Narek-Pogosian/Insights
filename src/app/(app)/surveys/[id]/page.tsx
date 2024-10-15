@@ -2,6 +2,7 @@ import { formSchema } from "@/lib/schemas/form-schema";
 import { getFormById } from "@/server/data-access/form";
 import { notFound, redirect } from "next/navigation";
 import { getServerAuthSession } from "@/server/auth";
+import { parsePrismaJson } from "@/lib/utils";
 import { Suspense } from "react";
 import Answers from "./_components/answers";
 import PageTitle from "../../_components/page-title";
@@ -9,9 +10,8 @@ import CancelFormDialog from "../_components/cancel-form-dialog";
 import UncancelButton from "../_components/uncancel-button";
 import SurveyInformation from "./_components/survey-information";
 import DeleteFormDialog from "../_components/delete-form-dialog";
-import CsvDownload from "./_components/csv-download";
-import { parsePrismaJson } from "@/lib/utils";
 import SharePopover from "../_components/share-popover";
+import PreviewDialog from "@/components/formrenderer/preview-dialog";
 
 async function page({ params }: { params: { id: string } }) {
   const form = await getFormById(params.id);
@@ -28,6 +28,7 @@ async function page({ params }: { params: { id: string } }) {
   return (
     <div className="space-y-6">
       <PageTitle>{form?.title}</PageTitle>
+      <PreviewDialog form={data} />
       <SurveyInformation form={form} />
 
       <section aria-describedby="actions">
@@ -57,18 +58,8 @@ async function page({ params }: { params: { id: string } }) {
         >
           Answers
         </h2>
-        <CsvDownload surveyId={form.id} title={form.title} />
-      </section>
-
-      <section aria-describedby="latest">
-        <h2
-          id="latest"
-          className="mb-1 text-lg font-semibold text-foreground-muted"
-        >
-          Latest answers
-        </h2>
         <Suspense fallback={<p>Loading answers...</p>}>
-          <Answers id={form.id} />
+          <Answers id={form.id} title={form.title} />
         </Suspense>
       </section>
     </div>
