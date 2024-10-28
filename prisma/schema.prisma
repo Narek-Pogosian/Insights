@@ -1,0 +1,70 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+enum Status {
+    DRAFT
+    PUBLISHED
+    CANCELLED
+}
+
+model Survey {
+    id          String     @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    content     Json       @default("[]")
+    status      Status     @default(DRAFT)
+    createdAt   DateTime   @default(now())
+    updatedAt   DateTime   @updatedAt
+    userId      String     @db.ObjectId
+    User        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+    Response    Response[]
+
+    @@index([userId])
+}
+
+model Response {
+    id         String   @id @default(auto()) @map("_id") @db.ObjectId
+    surveyId   String   @db.ObjectId
+    survey     Survey   @relation(fields: [surveyId], references: [id], onDelete: Cascade)
+    respondent String 
+    answers    Json
+    createdAt  DateTime @default(now())
+
+    @@index([surveyId])
+}
+
+model User {
+    id             String    @id @default(auto()) @map("_id") @db.ObjectId
+    name           String?
+    email          String?   @unique
+    hashedPassword String?
+    emailVerified  DateTime?
+    image          String?
+    surveys        Survey[]
+    accounts       Account[]
+}
+
+model Account {
+    id                       String  @id @default(auto()) @map("_id") @db.ObjectId
+    userId                   String  @db.ObjectId
+    type                     String
+    provider                 String
+    providerAccountId        String
+    refresh_token            String?
+    access_token             String?
+    expires_at               Int?
+    token_type               String?
+    scope                    String?
+    id_token                 String?
+    session_state            String?
+    user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    refresh_token_expires_in Int?
+
+    @@unique([provider, providerAccountId])
+}
+
