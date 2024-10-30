@@ -10,6 +10,7 @@
     --background: 240 30% 98%;
     --background-card: 240 10% 99%;
     --background-input: 240 0% 100%;
+    --background-muted: 240 4.8% 95.2%;
     --background-popover: 240 10% 99%;
 
     --foreground: 240 8% 5%;
@@ -27,6 +28,7 @@
     --background: 240, 8%, 7%;
     --background-card: 240, 8%, 9%;
     --background-input: 240, 10%, 11%;
+    --background-muted: 240, 8%, 13.5%;
     --background-popover: 240, 8%, 8%;
 
     --foreground: 240 4% 98%;

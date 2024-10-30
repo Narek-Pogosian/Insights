@@ -34,7 +34,7 @@ function Header() {
                   )}
                 >
                   <Link
-                    className="rounded px-3 py-1.5 transition-colors hover:bg-neutral-100 dark:hover:bg-white/10"
+                    className="hover:bg-background-muted rounded px-3 py-1.5 transition-colors"
                     href={item.href}
                   >
                     {item.label}

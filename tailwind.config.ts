@@ -45,6 +45,7 @@ export default {
         background: {
           DEFAULT: "hsl(var(--background))",
           popover: "hsl(var(--background-popover))",
+          muted: "hsl(var(--background-muted))",
           input: "hsl(var(--background-input))",
           card: "hsl(var(--background-card))",
         },
