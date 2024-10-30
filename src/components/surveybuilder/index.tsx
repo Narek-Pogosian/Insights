@@ -1,10 +1,10 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import { useFormbuilder } from "./hooks/use-formbuilder";
-// import FormRenderer from "../formrenderer";
-// import FieldDialog from "./field-adder/field-dialog";
-// import FieldList from "./field-list";
+import { useSurveybuilder } from "./hooks/use-surveybuilder";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Save } from "lucide-react";
 
 interface SurveyBuilderProps {
   mode: "create" | "edit";
@@ -19,15 +19,27 @@ interface SurveyBuilderUpdateProps extends SurveyBuilderProps {
   id: string;
 }
 
-type SurveybuilderProps = SurveyBuilderCreateProps | SurveyBuilderUpdateProps;
-
-function SurveyBuilder(props: SurveybuilderProps) {
+function SurveyBuilder(
+  props: SurveyBuilderCreateProps | SurveyBuilderUpdateProps,
+) {
   console.log(props);
-  // const { state } = useFormbuilder();
+  const { state, dispatch } = useSurveybuilder();
 
   return (
     <div className="max-w-3xl">
-      <p>Settings</p>
+      <div className="mb-4 flex items-center justify-between gap-2">
+        <Input
+          id="title"
+          placeholder="Title of survey"
+          value={state.title}
+          onChange={(e) =>
+            dispatch({ type: "EDIT_TITLE", payload: e.target.value })
+          }
+        />
+        <Button>
+          <Save className="h-4 w-4" /> Save Survey
+        </Button>
+      </div>
       <Tabs defaultValue="builder">
         <TabsList>
           <TabsTrigger value="builder">Builder</TabsTrigger>

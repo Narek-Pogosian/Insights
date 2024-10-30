@@ -1,11 +1,14 @@
 import SurveyBuilder from "@/components/surveybuilder";
 import PageTitle from "../_components/page-title";
+import SurveybuilderProvider from "@/components/surveybuilder/context";
 
 function Create() {
   return (
     <>
       <PageTitle>Create</PageTitle>
-      <SurveyBuilder mode="create" />
+      <SurveybuilderProvider mode="create">
+        <SurveyBuilder mode="create" />
+      </SurveybuilderProvider>
     </>
   );
 }
