@@ -5,6 +5,8 @@ import { useSurveybuilder } from "./hooks/use-surveybuilder";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Save } from "lucide-react";
+import FieldDialog from "./field-dialog";
+import Field from "./field";
 
 interface SurveyBuilderProps {
   mode: "create" | "edit";
@@ -26,8 +28,8 @@ function SurveyBuilder(
   const { state, dispatch } = useSurveybuilder();
 
   return (
-    <div className="max-w-3xl">
-      <div className="mb-4 flex items-center justify-between gap-2">
+    <div className="mx-auto max-w-4xl">
+      <div className="sticky top-0 z-40 mb-2 flex items-center justify-between gap-2 bg-background py-2">
         <Input
           id="title"
           placeholder="Title of survey"
@@ -41,13 +43,12 @@ function SurveyBuilder(
         </Button>
       </div>
       <Tabs defaultValue="builder">
-        <TabsList>
+        <TabsList className="sticky top-[61px] z-40 mb-2 bg-background-input">
           <TabsTrigger value="builder">Builder</TabsTrigger>
           <TabsTrigger value="preview">Preview</TabsTrigger>
         </TabsList>
         <TabsContent value="builder">
-          {/* <FieldList /> */}
-          {/* <FieldDialog /> */}
+          <SurveyBuilderContent />
         </TabsContent>
         <TabsContent value="preview">Preview</TabsContent>
       </Tabs>
@@ -56,3 +57,19 @@ function SurveyBuilder(
 }
 
 export default SurveyBuilder;
+
+function SurveyBuilderContent() {
+  const { state } = useSurveybuilder();
+
+  // Add dnd context here, also add tailwindscrollbar with thin on dialog
+  return (
+    <>
+      <ul className="space-y-6">
+        {state.fields.map((field) => (
+          <Field key={field.id} field={field} />
+        ))}
+      </ul>
+      <FieldDialog />
+    </>
+  );
+}
