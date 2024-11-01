@@ -2,9 +2,22 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useSurveybuilder } from "./hooks/use-surveybuilder";
+import { useDragBuilder } from "./hooks/use-dragbuilder";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Save } from "lucide-react";
+import {
+  DndContext,
+  DragOverlay,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+
 import FieldDialog from "./field-dialog";
 import Field from "./field";
 
@@ -60,16 +73,39 @@ export default SurveyBuilder;
 
 function SurveyBuilderContent() {
   const { state } = useSurveybuilder();
+  const { handleDragEnd, handleDragStart, activeId } = useDragBuilder();
 
-  // Add dnd context here, also add tailwindscrollbar with thin on dialog
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 10 } }),
+  );
+
   return (
-    <>
-      <ul className="space-y-6">
-        {state.fields.map((field) => (
-          <Field key={field.id} field={field} />
-        ))}
-      </ul>
+    <DndContext
+      sensors={sensors}
+      onDragEnd={handleDragEnd}
+      onDragStart={handleDragStart}
+    >
+      <SortableContext
+        items={state.fields}
+        strategy={verticalListSortingStrategy}
+      >
+        <ul className="space-y-6">
+          {state.fields.map((f) => (
+            <Field
+              key={f.id}
+              field={f}
+              className={activeId === f.id ? "opacity-25" : ""}
+            />
+          ))}
+        </ul>
+      </SortableContext>
+      <DragOverlay>
+        <Field
+          field={state.fields.find((f) => f.id === activeId)!}
+          className="shadow-lg dark:shadow-black/40"
+        />
+      </DragOverlay>
       <FieldDialog />
-    </>
+    </DndContext>
   );
 }

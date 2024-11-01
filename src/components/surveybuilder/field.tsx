@@ -1,8 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type SurveySchemaField } from "@/lib/zod/survey-schemas";
 import { useSurveybuilder } from "./hooks/use-surveybuilder";
+import { useSortable } from "@dnd-kit/sortable";
 import { Button } from "../ui/button";
 import { Grip } from "lucide-react";
+import { CSS } from "@dnd-kit/utilities";
 import { cn } from "@/lib/utils";
 import FieldDialog from "./field-dialog";
 
@@ -12,6 +14,8 @@ type FieldProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
 
 function Field({ field, className }: FieldProps) {
   const { dispatch } = useSurveybuilder();
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: field.id, data: { type: field.type } });
 
   function handleRemove() {
     dispatch({
@@ -23,12 +27,16 @@ function Field({ field, className }: FieldProps) {
   return (
     <Card
       className={cn("relative flex justify-between", className)}
-      // style={{ ...style, touchAction: "none" }}
+      style={{
+        transition,
+        transform: CSS.Translate.toString(transform),
+        touchAction: "none",
+      }}
     >
       <div
-        // ref={setNodeRef}
-        // {...attributes}
-        // {...listeners}
+        ref={setNodeRef}
+        {...attributes}
+        {...listeners}
         role="button"
         className="w-full cursor-grab pb-6 pt-4"
       >

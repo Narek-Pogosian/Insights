@@ -33,7 +33,7 @@ function FieldDialog({ defaultField }: Props) {
           {defaultField ? "Edit" : "Add Field"}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-3xl px-6 py-8">
+      <DialogContent className="max-w-3xl">
         <DialogHeader>
           <DialogTitle>{defaultField ? "Edit field" : "Add field"}</DialogTitle>
           <DialogDescription></DialogDescription>

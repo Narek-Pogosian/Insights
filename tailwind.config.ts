@@ -49,13 +49,12 @@ export default {
           input: "hsl(var(--background-input))",
           card: "hsl(var(--background-card))",
         },
-        border: {
-          DEFAULT: "hsl(var(--border))",
-        },
+        scrollbar: "hsl(var(--scrollbar))",
+        border: "hsl(var(--border))",
         ring: "hsl(var(--ring))",
       },
     },
   },
   // eslint-disable-next-line
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar")],
 } satisfies Config;
