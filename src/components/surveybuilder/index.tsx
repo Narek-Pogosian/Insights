@@ -20,6 +20,7 @@ import {
 
 import FieldDialog from "./field-dialog";
 import Field from "./field";
+import SurveyRenderer from "../surveyrenderer";
 
 interface SurveyBuilderProps {
   mode: "create" | "edit";
@@ -63,7 +64,9 @@ function SurveyBuilder(
         <TabsContent value="builder">
           <SurveyBuilderContent />
         </TabsContent>
-        <TabsContent value="preview">Preview</TabsContent>
+        <TabsContent value="preview">
+          <SurveyRenderer mode="preview" form={state.fields} />
+        </TabsContent>
       </Tabs>
     </div>
   );
