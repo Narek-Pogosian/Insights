@@ -1,8 +1,8 @@
 "use client";
 
 import { type SurveybuilderActions, type SurveybuilderState } from "./types";
-import { type SurveySchema } from "@/lib/zod/survey-schemas";
-import { createContext, useReducer } from "react";
+import { surveySchema, type SurveySchema } from "@/lib/zod/survey-schemas";
+import { createContext, useEffect, useReducer } from "react";
 import { surveybuilderReducer } from "./reducer";
 
 type ContextType = {
@@ -27,11 +27,40 @@ interface UpdateProps extends Props {
   defaultTitle: string;
 }
 
+function getTitleFromStorage() {
+  return sessionStorage.getItem("title") ?? "";
+}
+
+function getFieldsFromStorage() {
+  const fields = sessionStorage.getItem("fields");
+  if (!fields) return [];
+
+  try {
+    return surveySchema.parse(JSON.parse(fields));
+  } catch (err) {
+    console.error("Failed to parse fields from sessionStorage", err);
+    return [];
+  }
+}
+
 function SurveybuilderProvider(props: CreateProps | UpdateProps) {
   const [state, dispatch] = useReducer(surveybuilderReducer, {
-    title: props.mode === "edit" ? props.defaultTitle : "",
-    fields: props.mode === "edit" ? props.defaultFields : [],
+    title: props.mode === "edit" ? props.defaultTitle : getTitleFromStorage(),
+    fields:
+      props.mode === "edit" ? props.defaultFields : getFieldsFromStorage(),
   });
+
+  useEffect(() => {
+    if (props.mode === "create") {
+      sessionStorage.setItem("fields", JSON.stringify(state.fields));
+    }
+  }, [props.mode, state.fields]);
+
+  useEffect(() => {
+    if (props.mode === "create") {
+      sessionStorage.setItem("title", state.title);
+    }
+  }, [props.mode, state.title]);
 
   return (
     <SurveybuilderContext.Provider value={{ state, dispatch }}>
