@@ -1,9 +1,16 @@
-import { api } from "@/trpc/server";
+import { api, HydrateClient } from "@/trpc/server";
+import SurveysList from "./_components/surveys-list";
+import PageTitle from "../_components/page-title";
 
-async function Surveys() {
-  const surveys = await api.survey.getAllSurveys();
+function Surveys() {
+  void api.survey.getAllSurveys.prefetch();
 
-  return <div>{JSON.stringify(surveys, null, 2)}</div>;
+  return (
+    <HydrateClient>
+      <PageTitle>Your Surveys</PageTitle>
+      <SurveysList />
+    </HydrateClient>
+  );
 }
 
 export default Surveys;
