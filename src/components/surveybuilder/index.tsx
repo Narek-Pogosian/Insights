@@ -21,6 +21,8 @@ import {
 import FieldDialog from "./field-dialog";
 import Field from "./field";
 import SurveyRenderer from "../surveyrenderer";
+import { api } from "@/trpc/react";
+import { toast } from "sonner";
 
 interface SurveyBuilderProps {
   mode: "create" | "edit";
@@ -38,8 +40,44 @@ interface SurveyBuilderUpdateProps extends SurveyBuilderProps {
 function SurveyBuilder(
   props: SurveyBuilderCreateProps | SurveyBuilderUpdateProps,
 ) {
-  console.log(props);
   const { state, dispatch } = useSurveybuilder();
+
+  const utils = api.useUtils();
+  const createMutation = api.survey.createSurvey.useMutation({
+    onError: (err) => {
+      toast(err.message);
+    },
+    onSuccess: async () => {
+      toast("New survey created");
+      await utils.survey.getAllSurveys.invalidate();
+      dispatch({ type: "RESET" });
+    },
+  });
+
+  const editMutation = api.survey.editSurvey.useMutation({
+    onError: (err) => {
+      toast(err.message);
+    },
+    onSuccess: () => {
+      toast("Saved");
+    },
+  });
+
+  function handleSave() {
+    if (!state.title.trim()) {
+      toast("A title is required");
+    }
+
+    if (createMutation.isPending || editMutation.isPending) return;
+    if (props.mode === "create") {
+      createMutation.mutate({ title: state.title, survey: state.fields });
+    } else {
+      editMutation.mutate({
+        survey: { title: state.title, survey: state.fields },
+        id: props.id,
+      });
+    }
+  }
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -52,7 +90,10 @@ function SurveyBuilder(
             dispatch({ type: "EDIT_TITLE", payload: e.target.value })
           }
         />
-        <Button>
+        <Button
+          onClick={handleSave}
+          loading={createMutation.isPending || editMutation.isPending}
+        >
           <Save className="h-4 w-4" /> Save Survey
         </Button>
       </div>
