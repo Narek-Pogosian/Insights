@@ -42,7 +42,7 @@ function SurveyBuilder(
   const { state, dispatch } = useSurveybuilder();
 
   return (
-    <div className="mx-auto max-w-4xl">
+    <div className="mx-auto max-w-3xl">
       <div className="sticky top-0 z-40 mb-2 flex items-center justify-between gap-2 bg-background py-2">
         <Input
           id="title"

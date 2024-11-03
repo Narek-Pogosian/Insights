@@ -28,27 +28,42 @@ interface UpdateProps extends Props {
 }
 
 function getTitleFromStorage() {
+  if (typeof window === "undefined") return "";
   return sessionStorage.getItem("title") ?? "";
 }
 
 function getFieldsFromStorage() {
+  if (typeof window === "undefined") return [];
   const fields = sessionStorage.getItem("fields");
   if (!fields) return [];
 
   try {
     return surveySchema.parse(JSON.parse(fields));
-  } catch (err) {
-    console.error("Failed to parse fields from sessionStorage", err);
+    // eslint-disable-next-line
+  } catch (e) {
     return [];
   }
 }
 
 function SurveybuilderProvider(props: CreateProps | UpdateProps) {
   const [state, dispatch] = useReducer(surveybuilderReducer, {
-    title: props.mode === "edit" ? props.defaultTitle : getTitleFromStorage(),
-    fields:
-      props.mode === "edit" ? props.defaultFields : getFieldsFromStorage(),
+    title: props.mode === "edit" ? props.defaultTitle : "",
+    fields: props.mode === "edit" ? props.defaultFields : [],
   });
+
+  useEffect(() => {
+    if (props.mode === "create") {
+      const title = getTitleFromStorage();
+      const fields = getFieldsFromStorage();
+
+      if (title) {
+        dispatch({ type: "EDIT_TITLE", payload: title });
+      }
+      if (fields.length > 0) {
+        dispatch({ type: "SET_FIELDS", payload: fields });
+      }
+    }
+  }, [props.mode]);
 
   useEffect(() => {
     if (props.mode === "create") {
