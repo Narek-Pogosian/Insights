@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 // import SharePopover from "./share-popover";
 // import PublishForm from "./publish-form-dialog";
 import Link from "next/link";
+import DeleteSurveyDialog from "./delete-survey-dialog";
 
 interface Props {
   survey: Survey;
@@ -37,8 +38,7 @@ function SurveyCard({ survey }: Props) {
 
       <CardFooter className="mt-4 flex justify-between">
         <SurveyActionButtons status={survey.status} id={survey.id} />
-        <p>Delete</p>
-        {/* <DeleteFormDialog id={survey.id} /> */}
+        <DeleteSurveyDialog id={survey.id} />
       </CardFooter>
     </Card>
   );

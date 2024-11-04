@@ -54,4 +54,24 @@ export const surveyRouter = createTRPCRouter({
         },
       });
     }),
+
+  deleteSurveyById: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      const survey = await ctx.db.survey.findFirst({ where: { id: input } });
+
+      if (!survey) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+        });
+      }
+
+      if (survey.userId !== ctx.session.user.id) {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      }
+
+      return ctx.db.survey.delete({
+        where: { id: input },
+      });
+    }),
 });

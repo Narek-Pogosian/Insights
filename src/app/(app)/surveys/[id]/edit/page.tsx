@@ -1,7 +1,8 @@
 "use client";
 
-import SurveyBuilder from "@/components/surveybuilder";
 import SurveybuilderProvider from "@/components/surveybuilder/context";
+import SurveyBuilder from "@/components/surveybuilder";
+import LoadingPage from "@/components/loading-page";
 import { parsePrismaJson } from "@/lib/utils";
 import { surveySchema } from "@/lib/zod/survey-schemas";
 import { notFound } from "next/navigation";
@@ -11,7 +12,7 @@ function EditPage({ params }: { params: { id: string } }) {
   const { data, isPending } = api.survey.getSurveyById.useQuery(params.id);
 
   if (isPending) {
-    return <p>Loading...</p>;
+    return <LoadingPage />;
   }
 
   if (data) {
