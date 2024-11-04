@@ -58,7 +58,11 @@ function SurveyBuilder(
     onError: (err) => {
       toast(err.message);
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      await Promise.all([
+        utils.survey.getAllSurveys.invalidate(),
+        utils.survey.getSurveyById.invalidate(),
+      ]);
       toast("Saved");
     },
   });
