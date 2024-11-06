@@ -12,6 +12,7 @@ export default {
       black: colors.black,
       white: colors.white,
       neutral: colors.zinc,
+      accent: colors.teal,
       red: colors.rose,
     },
     borderRadius: {

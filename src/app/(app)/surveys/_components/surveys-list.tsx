@@ -35,7 +35,7 @@ function SurveysList() {
 
   return (
     <>
-      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-2">
           <div className="relative">
             <Search className="text-muted-foreground absolute left-2.5 top-3 h-4 w-4" />
@@ -76,9 +76,9 @@ function SurveysList() {
           Empty. No surveys here.
         </div>
       ) : (
-        <ul className="grid gap-6 md:grid-cols-2">
+        <ul className="grid gap-8 md:grid-cols-2">
           {filteredSurvey.map((survey) => (
-            <SurveyCard survey={survey} key={survey.id} />
+            <SurveyCard key={survey.id} survey={survey} />
           ))}
         </ul>
       )}

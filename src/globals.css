@@ -20,7 +20,7 @@
     --border: 240 8% 92%;
     --ring: 240 10% 3.9%;
 
-    --radius: 4px;
+    --radius: 6px;
   }
   .dark {
     --primary: 0 0% 94%;
@@ -36,7 +36,7 @@
     --foreground-muted: 240 4% 55%;
 
     --scrollbar: 240, 8%, 23%;
-    --border: 240 4% 18%;
+    --border: 240 4% 17%;
     --ring: 240 10% 97.9%;
   }
 }
@@ -47,7 +47,7 @@
   }
 
   html {
-    @apply scrollbar scrollbar-track-transparent scrollbar-thumb-scrollbar h-full;
+    @apply h-full scrollbar scrollbar-track-transparent scrollbar-thumb-scrollbar;
   }
 
   body {

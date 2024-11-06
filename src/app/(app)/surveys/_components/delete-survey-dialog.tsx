@@ -14,6 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Trash2 } from "lucide-react";
 
 interface DeleteSurveyDialogProps {
   id: string;
@@ -54,16 +55,17 @@ function DeleteSurveyDialog({ id }: DeleteSurveyDialogProps) {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger className="relative" asChild>
-        <Button variant="destructive" size="sm">
-          Delete
+        <Button variant="outline" size="icon" className="hover:text-red-500">
+          <Trash2 className="h-4 w-4" />
+          <span className="sr-only">Delete survey</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the form
-            and all related stats will be removed from our servers.
+            This action cannot be undone. This will permanently delete the
+            survey and all related stats will be removed from our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
