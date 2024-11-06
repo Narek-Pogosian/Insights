@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import DeleteSurveyDialog from "./delete-survey-dialog";
 import Link from "next/link";
+import PublishSurveyDialog from "./publish-survey-dialog";
 
 interface SurveyCardProps {
   survey: Survey;
@@ -49,7 +50,7 @@ export default function SurveyCard({ survey }: SurveyCardProps) {
         {survey.status !== "DRAFT" ? (
           <DownloadCSVButton onDownload={handleDownloadCSV} />
         ) : (
-          <p>TODO: Publish dialog</p>
+          <PublishSurveyDialog id={survey.id} />
         )}
       </CardFooter>
     </Card>

@@ -4,12 +4,16 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
+import { Status } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 export const surveyRouter = createTRPCRouter({
   getAllSurveys: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.survey.findMany({ where: { userId: ctx.session.user.id } });
+    return ctx.db.survey.findMany({
+      where: { userId: ctx.session.user.id },
+      orderBy: { createdAt: "desc" },
+    });
   }),
 
   getSurveyById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
@@ -51,6 +55,29 @@ export const surveyRouter = createTRPCRouter({
           title: input.survey.title,
           content: JSON.stringify(input.survey.survey),
           userId: ctx.session.user.id,
+        },
+      });
+    }),
+
+  updateSurveyStatus: protectedProcedure
+    .input(z.object({ id: z.string(), status: z.nativeEnum(Status) }))
+    .mutation(async ({ ctx, input }) => {
+      const survey = await ctx.db.survey.findFirst({ where: { id: input.id } });
+
+      if (!survey) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+        });
+      }
+
+      if (survey.userId !== ctx.session.user.id) {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      }
+
+      return ctx.db.survey.update({
+        where: { id: input.id },
+        data: {
+          status: input.status,
         },
       });
     }),

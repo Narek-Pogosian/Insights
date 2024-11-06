@@ -47,7 +47,7 @@
   }
 
   html {
-    @apply h-full scrollbar scrollbar-track-transparent scrollbar-thumb-scrollbar;
+    @apply h-full scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar;
   }
 
   body {
