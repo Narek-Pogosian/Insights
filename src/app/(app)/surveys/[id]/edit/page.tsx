@@ -15,22 +15,23 @@ function EditPage({ params }: { params: { id: string } }) {
     return <LoadingPage />;
   }
 
-  if (data) {
-    const { data: fields, success } = surveySchema.safeParse(
-      parsePrismaJson(data.content),
-    );
-    if (!data || !success) notFound();
+  if (!data) notFound();
 
-    return (
-      <SurveybuilderProvider
-        mode="edit"
-        defaultTitle={data.title}
-        defaultFields={fields}
-      >
-        <SurveyBuilder mode="edit" id={data.id} />
-      </SurveybuilderProvider>
-    );
-  }
+  const { data: fields, success } = surveySchema.safeParse(
+    parsePrismaJson(data.content),
+  );
+
+  if (!success) notFound();
+
+  return (
+    <SurveybuilderProvider
+      mode="edit"
+      defaultTitle={data.title}
+      defaultFields={fields}
+    >
+      <SurveyBuilder mode="edit" id={data.id} />
+    </SurveybuilderProvider>
+  );
 }
 
 export default EditPage;
