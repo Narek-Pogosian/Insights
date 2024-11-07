@@ -17,13 +17,13 @@ export const surveyRouter = createTRPCRouter({
   }),
 
   getSurveyById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    console.log("first");
     return ctx.db.survey.findFirst({ where: { id: input } });
   }),
 
   createSurvey: protectedProcedure
     .input(createSurveyScema)
     .mutation(({ ctx, input }) => {
-      console.log("userID", ctx.session.user.id);
       return ctx.db.survey.create({
         data: {
           title: input.title,

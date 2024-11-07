@@ -26,6 +26,8 @@ import { Checkbox } from "../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { createValidationSchema } from "./create-validation";
 import { toast } from "sonner";
+import { api } from "@/trpc/react";
+import { useRouter } from "next/navigation";
 
 interface SurveyRendererProps {
   mode: "answer" | "preview";
@@ -50,11 +52,27 @@ function SurveyRenderer(props: Props) {
     reValidateMode: "onChange",
   });
 
+  const router = useRouter();
+  const answer = api.answer.answer.useMutation();
   async function onSubmit(data: typeof schema) {
     if (props.mode === "preview") {
       toast("Preview survey submitted without errors");
+      return;
     }
-    console.log(data);
+
+    if (answer.isPending) return;
+    const res = await answer.mutateAsync({
+      surveyId: props.id,
+      answers: JSON.stringify(data),
+    });
+
+    if (res === "Success") {
+      router.replace("/survey/success");
+    }
+
+    if (res === "Answered") {
+      router.replace("/survey/answered");
+    }
   }
 
   if (props.survey.length === 0) {
@@ -246,7 +264,9 @@ function SurveyRenderer(props: Props) {
             );
         })}
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit" loading={answer.isPending}>
+          Submit
+        </Button>
       </form>
     </Form>
   );
