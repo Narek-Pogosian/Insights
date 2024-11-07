@@ -11,7 +11,7 @@ async function layout({ children }: Readonly<{ children: React.ReactNode }>) {
     <>
       <Header />
       <main className="container py-8">{children}</main>
-      <Toaster position="top-center" duration={2000} />
+      <Toaster position="bottom-right" duration={2000} />
     </>
   );
 }

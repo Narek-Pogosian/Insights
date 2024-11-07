@@ -28,12 +28,13 @@ function PublishSurveyDialog({ id }: PublishSurveyDialogProps) {
     onError: () => {
       toast("Survey could not be published.");
     },
-    onSuccess: (updatedSurvey, input) => {
+    onSuccess: async (updatedSurvey, input) => {
       utils.survey.getAllSurveys.setData(undefined, (data) => {
         return data?.map((survey) =>
           survey.id == input.id ? updatedSurvey : survey,
         );
       });
+      await utils.survey.getSurveyById.invalidate(input.id);
     },
     onSettled: () => {
       setOpen(false);

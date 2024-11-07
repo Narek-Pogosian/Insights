@@ -36,7 +36,7 @@ function DeleteSurveyDialog({ id }: DeleteSurveyDialogProps) {
     onSuccess: async () => {
       toast("Survey deleted");
       setOpen(false);
-      await utils.survey.getAllSurveys.invalidate();
+      await utils.survey.getSurveyById.invalidate(id);
     },
     onError: (err, _, ctx) => {
       setOpen(false);

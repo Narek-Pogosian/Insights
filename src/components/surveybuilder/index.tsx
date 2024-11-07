@@ -68,8 +68,9 @@ function SurveyBuilder(
   });
 
   function handleSave() {
-    if (!state.title.trim()) {
-      toast("A title is required");
+    if (state.title.trim().length === 0) {
+      toast("A title is required", { position: "top-center", important: true });
+      return;
     }
 
     if (createMutation.isPending || editMutation.isPending) return;
@@ -89,6 +90,7 @@ function SurveyBuilder(
         <Input
           id="title"
           placeholder="Title of survey"
+          className="bg-background-card"
           value={state.title}
           onChange={(e) =>
             dispatch({ type: "EDIT_TITLE", payload: e.target.value })

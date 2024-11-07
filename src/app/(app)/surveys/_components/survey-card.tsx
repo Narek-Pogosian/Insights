@@ -9,9 +9,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import PublishSurveyDialog from "./publish-survey-dialog";
 import DeleteSurveyDialog from "./delete-survey-dialog";
 import Link from "next/link";
-import PublishSurveyDialog from "./publish-survey-dialog";
 
 interface SurveyCardProps {
   survey: Survey;
@@ -42,7 +42,14 @@ export default function SurveyCard({ survey }: SurveyCardProps) {
           <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold capitalize">
             {survey.status.toLocaleLowerCase()}
           </div>
-          {survey.status !== "DRAFT" && <SurveyResponses />}
+          {survey.status !== "DRAFT" && (
+            <div className="flex items-center">
+              <Users className="mr-2 h-5 w-5" />
+              <span className="font-semibold">
+                {survey.responseCount} Responses
+              </span>
+            </div>
+          )}
         </div>
       </CardContent>
 
@@ -86,13 +93,6 @@ const SurveyActions = ({
     </div>
   );
 };
-
-const SurveyResponses = () => (
-  <div className="flex items-center">
-    <Users className="mr-2 h-5 w-5" />
-    <span className="font-semibold">100 Responses</span>
-  </div>
-);
 
 const DownloadCSVButton = ({ onDownload }: { onDownload: () => void }) => (
   <Button onClick={onDownload} className="w-full">
