@@ -25,10 +25,11 @@ import { Input } from "../ui/input";
 import { Checkbox } from "../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { createValidationSchema } from "./create-validation";
+import { toast } from "sonner";
 
 interface SurveyRendererProps {
   mode: "answer" | "preview";
-  form: SurveySchema;
+  survey: SurveySchema;
 }
 
 interface SurveyRendererAnswerProps extends SurveyRendererProps {
@@ -43,20 +44,23 @@ interface SurveyRendererPreviewProps extends SurveyRendererProps {
 type Props = SurveyRendererAnswerProps | SurveyRendererPreviewProps;
 
 function SurveyRenderer(props: Props) {
-  const schema = createValidationSchema(props.form);
+  const schema = createValidationSchema(props.survey);
   const f = useForm<typeof schema>({
     resolver: zodResolver(schema),
     reValidateMode: "onChange",
   });
 
   async function onSubmit(data: typeof schema) {
+    if (props.mode === "preview") {
+      toast("Preview survey submitted without errors");
+    }
     console.log(data);
   }
 
-  if (props.form.length === 0) {
+  if (props.survey.length === 0) {
     return (
       <div className="mx-auto mb-8 pt-10 text-center font-medium text-neutral-300 dark:text-neutral-600">
-        Empty, no form to show.
+        Empty, no survey to show.
       </div>
     );
   }
@@ -67,7 +71,7 @@ function SurveyRenderer(props: Props) {
         onSubmit={f.handleSubmit(onSubmit)}
         className="mx-auto grid w-full max-w-3xl gap-y-8 py-4"
       >
-        {props.form.map((formField, i) => {
+        {props.survey.map((formField, i) => {
           const label = formField.label as keyof typeof schema;
 
           if (formField.type === "text")

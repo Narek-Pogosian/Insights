@@ -17,6 +17,14 @@ function EditPage({ params }: { params: { id: string } }) {
 
   if (!data) notFound();
 
+  if (data.status !== "DRAFT") {
+    return (
+      <div className="pt-20 text-center text-foreground-muted">
+        Can only edit surveys that are in draft.
+      </div>
+    );
+  }
+
   const { data: fields, success } = surveySchema.safeParse(
     parsePrismaJson(data.content),
   );

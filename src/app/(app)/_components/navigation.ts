@@ -12,7 +12,7 @@ export function getNavigationList(pathname: string) {
     {
       href: "/surveys",
       label: "Surveys",
-      active: pathname.startsWith("/surveys"),
+      active: pathname === "/surveys",
       icon: Library,
       submenus: [],
     },

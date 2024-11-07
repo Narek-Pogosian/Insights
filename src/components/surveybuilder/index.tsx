@@ -59,10 +59,12 @@ function SurveyBuilder(
       toast(err.message);
     },
     onSuccess: async () => {
-      await Promise.all([
-        utils.survey.getAllSurveys.invalidate(),
-        utils.survey.getSurveyById.invalidate(),
-      ]);
+      if (props.mode === "edit") {
+        await Promise.all([
+          utils.survey.getAllSurveys.invalidate(),
+          utils.survey.getSurveyById.invalidate(props.id),
+        ]);
+      }
       toast("Saved");
     },
   });
@@ -112,7 +114,7 @@ function SurveyBuilder(
           <SurveyBuilderContent />
         </TabsContent>
         <TabsContent value="preview">
-          <SurveyRenderer mode="preview" form={state.fields} />
+          <SurveyRenderer mode="preview" survey={state.fields} />
         </TabsContent>
       </Tabs>
     </div>

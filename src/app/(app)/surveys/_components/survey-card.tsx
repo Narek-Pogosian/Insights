@@ -1,4 +1,4 @@
-import { Calendar, Share2, Edit, Download, Users } from "lucide-react";
+import { Calendar, Share2, Edit, Download, Users, Eye } from "lucide-react";
 import { type Survey } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import {
@@ -73,6 +73,13 @@ const SurveyActions = ({
 }) => {
   return (
     <div className="flex space-x-2">
+      <Button variant="outline" size="icon" asChild>
+        <Link href={`/surveys/${surveyId}/preview`}>
+          <Eye className="h-4 w-4" />
+          <span className="sr-only">Preview survey</span>
+        </Link>
+      </Button>
+
       {status === "DRAFT" && (
         <Button variant="outline" size="icon" asChild>
           <Link href={`/surveys/${surveyId}/edit`}>
