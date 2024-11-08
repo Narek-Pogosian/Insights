@@ -141,15 +141,21 @@ function SurveyBuilderContent() {
         items={state.fields}
         strategy={verticalListSortingStrategy}
       >
-        <ul className="space-y-6">
-          {state.fields.map((f) => (
-            <Field
-              key={f.id}
-              field={f}
-              className={activeId === f.id ? "opacity-25" : ""}
-            />
-          ))}
-        </ul>
+        {state.fields.length === 0 ? (
+          <div className="mx-auto mb-8 pt-10 text-center font-medium text-neutral-300 dark:text-neutral-600">
+            No field added yet, add a field by clicking below.
+          </div>
+        ) : (
+          <ul className="space-y-6">
+            {state.fields.map((f) => (
+              <Field
+                key={f.id}
+                field={f}
+                className={activeId === f.id ? "opacity-25" : ""}
+              />
+            ))}
+          </ul>
+        )}
       </SortableContext>
       <DragOverlay>
         <Field

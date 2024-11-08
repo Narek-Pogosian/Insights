@@ -87,7 +87,7 @@ function SurveyRenderer(props: Props) {
     <Form {...f}>
       <form
         onSubmit={f.handleSubmit(onSubmit)}
-        className="mx-auto grid w-full max-w-3xl gap-y-8 py-4"
+        className="mx-auto grid w-full max-w-3xl gap-y-10 py-4"
       >
         {props.survey.map((formField, i) => {
           const label = formField.label as keyof typeof schema;

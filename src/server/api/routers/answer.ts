@@ -13,10 +13,13 @@ export const answerRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const ip = headers().get("x-forwarded-for") ?? "kek";
 
-      const [found, createResponse] = await Promise.all([
-        ctx.db.response.findFirst({
-          where: { surveyId: input.surveyId, respondent: ip },
-        }),
+      const answered = await ctx.db.response.findFirst({
+        where: { surveyId: input.surveyId, respondent: ip },
+      });
+
+      if (answered) return "Answered";
+
+      const [createResponse] = await Promise.all([
         ctx.db.response
           .create({
             data: {
@@ -36,7 +39,6 @@ export const answerRouter = createTRPCRouter({
           .catch(() => null),
       ]);
 
-      if (found) return "Answered";
       if (createResponse) return "Success";
 
       return "Failed";

@@ -1,4 +1,4 @@
-import { Calendar, Share2, Edit, Download, Users, Eye } from "lucide-react";
+import { Calendar, Edit, Download, Users, Eye } from "lucide-react";
 import { type Survey } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +12,7 @@ import {
 import PublishSurveyDialog from "./publish-survey-dialog";
 import DeleteSurveyDialog from "./delete-survey-dialog";
 import Link from "next/link";
+import SharePopover from "./share-popover";
 
 interface SurveyCardProps {
   survey: Survey;
@@ -46,7 +47,8 @@ export default function SurveyCard({ survey }: SurveyCardProps) {
             <div className="flex items-center">
               <Users className="mr-2 h-5 w-5" />
               <span className="font-semibold">
-                {survey.responseCount} Responses
+                {survey.responseCount}{" "}
+                {survey.responseCount === 1 ? "Response" : "Responses"}
               </span>
             </div>
           )}
@@ -89,12 +91,7 @@ const SurveyActions = ({
         </Button>
       )}
 
-      {status === "PUBLISHED" && (
-        <Button variant="outline" size="icon">
-          <Share2 className="h-4 w-4" />
-          <span className="sr-only">Share survey</span>
-        </Button>
-      )}
+      {status === "PUBLISHED" && <SharePopover id={surveyId} />}
 
       <DeleteSurveyDialog id={surveyId} />
     </div>
