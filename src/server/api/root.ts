@@ -1,10 +1,10 @@
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
 import { surveyRouter } from "./routers/survey";
-import { answerRouter } from "./routers/answer";
+import { responseRouter } from "./routers/response";
 
 export const appRouter = createTRPCRouter({
   survey: surveyRouter,
-  answer: answerRouter,
+  response: responseRouter,
 });
 
 export type AppRouter = typeof appRouter;

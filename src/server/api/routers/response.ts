@@ -1,9 +1,14 @@
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
+import { TRPCError } from "@trpc/server";
 import { headers } from "next/headers";
 import { z } from "zod";
 
-export const answerRouter = createTRPCRouter({
-  answer: publicProcedure
+export const responseRouter = createTRPCRouter({
+  respond: publicProcedure
     .input(
       z.object({
         surveyId: z.string(),
@@ -42,5 +47,17 @@ export const answerRouter = createTRPCRouter({
       if (createResponse) return "Success";
 
       return "Failed";
+    }),
+
+  getResponses: protectedProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      const survey = await ctx.db.survey.findFirst({ where: { id: input } });
+
+      if (!survey) throw new TRPCError({ code: "NOT_FOUND" });
+      if (survey.userId !== ctx.session.user.id)
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      return ctx.db.response.findMany({ where: { surveyId: input } });
     }),
 });

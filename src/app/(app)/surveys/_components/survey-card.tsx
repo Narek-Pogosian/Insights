@@ -13,16 +13,14 @@ import PublishSurveyDialog from "./publish-survey-dialog";
 import DeleteSurveyDialog from "./delete-survey-dialog";
 import Link from "next/link";
 import SharePopover from "./share-popover";
+import { api } from "@/trpc/react";
+import { answersToCsv, downloadCsv } from "@/lib/utils";
 
 interface SurveyCardProps {
   survey: Survey;
 }
 
 export default function SurveyCard({ survey }: SurveyCardProps) {
-  const handleDownloadCSV = () => {
-    console.log("Downloading CSV");
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -57,7 +55,7 @@ export default function SurveyCard({ survey }: SurveyCardProps) {
 
       <CardFooter>
         {survey.status !== "DRAFT" ? (
-          <DownloadCSVButton onDownload={handleDownloadCSV} />
+          <DownloadCSVButton id={survey.id} title={survey.title} />
         ) : (
           <PublishSurveyDialog id={survey.id} />
         )}
@@ -98,9 +96,25 @@ const SurveyActions = ({
   );
 };
 
-const DownloadCSVButton = ({ onDownload }: { onDownload: () => void }) => (
-  <Button onClick={onDownload} className="w-full">
-    <Download className="mr-2 h-4 w-4" />
-    Download Responses (CSV)
-  </Button>
-);
+const DownloadCSVButton = ({ id, title }: { id: string; title: string }) => {
+  const { refetch, isFetching } = api.response.getResponses.useQuery(id, {
+    enabled: false,
+  });
+
+  async function handleClick() {
+    if (isFetching) return;
+    const res = await refetch();
+
+    if (res.data) {
+      const csv = answersToCsv(res.data);
+      downloadCsv(title, csv);
+    }
+  }
+
+  return (
+    <Button onClick={handleClick} loading={isFetching} className="w-full">
+      <Download className="mr-2 h-4 w-4" />
+      Download Responses (CSV)
+    </Button>
+  );
+};

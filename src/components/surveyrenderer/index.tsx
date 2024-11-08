@@ -53,7 +53,7 @@ function SurveyRenderer(props: Props) {
   });
 
   const router = useRouter();
-  const answer = api.answer.answer.useMutation();
+  const answer = api.response.respond.useMutation();
   async function onSubmit(data: typeof schema) {
     if (props.mode === "preview") {
       toast("Preview survey submitted without errors");
