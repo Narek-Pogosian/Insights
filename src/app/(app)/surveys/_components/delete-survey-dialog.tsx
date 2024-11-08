@@ -55,7 +55,12 @@ function DeleteSurveyDialog({ id }: DeleteSurveyDialogProps) {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger className="relative" asChild>
-        <Button variant="outline" size="icon" className="hover:text-red-500">
+        <Button
+          variant="outline"
+          size="icon"
+          className="hover:text-red-500"
+          title="Delete"
+        >
           <Trash2 className="h-4 w-4" />
           <span className="sr-only">Delete survey</span>
         </Button>

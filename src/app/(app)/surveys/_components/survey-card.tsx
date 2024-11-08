@@ -11,16 +11,20 @@ import {
 } from "@/components/ui/card";
 import PublishSurveyDialog from "./publish-survey-dialog";
 import DeleteSurveyDialog from "./delete-survey-dialog";
-import Link from "next/link";
 import SharePopover from "./share-popover";
-import { api } from "@/trpc/react";
+import Link from "next/link";
+
 import { answersToCsv, downloadCsv } from "@/lib/utils";
+import { api } from "@/trpc/react";
 
 interface SurveyCardProps {
   survey: Survey;
 }
 
 export default function SurveyCard({ survey }: SurveyCardProps) {
+  const utils = api.useUtils();
+  utils.survey.getSurveyById.setData(survey.id, survey);
+
   return (
     <Card>
       <CardHeader>
@@ -74,7 +78,7 @@ const SurveyActions = ({
   return (
     <div className="flex space-x-2">
       <Button variant="outline" size="icon" asChild>
-        <Link href={`/surveys/${surveyId}/preview`}>
+        <Link href={`/surveys/${surveyId}/preview`} title="Preview">
           <Eye className="h-4 w-4" />
           <span className="sr-only">Preview survey</span>
         </Link>
@@ -82,7 +86,7 @@ const SurveyActions = ({
 
       {status === "DRAFT" && (
         <Button variant="outline" size="icon" asChild>
-          <Link href={`/surveys/${surveyId}/edit`}>
+          <Link href={`/surveys/${surveyId}/edit`} title="Edit">
             <Edit className="h-4 w-4" />
             <span className="sr-only">Edit survey</span>
           </Link>
