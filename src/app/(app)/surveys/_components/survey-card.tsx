@@ -11,10 +11,11 @@ import {
 } from "@/components/ui/card";
 import PublishSurveyDialog from "./publish-survey-dialog";
 import DeleteSurveyDialog from "./delete-survey-dialog";
+import CloseSurveyDialog from "./close-survey-dialog";
 import SharePopover from "./share-popover";
 import Link from "next/link";
 
-import { answersToCsv, downloadCsv } from "@/lib/utils";
+import { answersToCsv, cn, downloadCsv } from "@/lib/utils";
 import { api } from "@/trpc/react";
 
 interface SurveyCardProps {
@@ -42,7 +43,12 @@ export default function SurveyCard({ survey }: SurveyCardProps) {
 
       <CardContent>
         <div className="flex items-center justify-between">
-          <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold capitalize">
+          <div
+            className={cn(
+              "inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold capitalize",
+              { "text-red-600 dark:text-red-400": survey.status === "CLOSED" },
+            )}
+          >
             {survey.status.toLocaleLowerCase()}
           </div>
           {survey.status !== "DRAFT" && (
@@ -76,7 +82,7 @@ const SurveyActions = ({
   status: string;
 }) => {
   return (
-    <div className="flex space-x-2">
+    <div className="flex gap-2">
       <Button variant="outline" size="icon" asChild>
         <Link href={`/surveys/${surveyId}/preview`} title="Preview">
           <Eye className="h-4 w-4" />
@@ -94,6 +100,7 @@ const SurveyActions = ({
       )}
 
       {status === "PUBLISHED" && <SharePopover id={surveyId} />}
+      {status === "PUBLISHED" && <CloseSurveyDialog id={surveyId} />}
 
       <DeleteSurveyDialog id={surveyId} />
     </div>
@@ -111,6 +118,10 @@ const DownloadCSVButton = ({ id, title }: { id: string; title: string }) => {
 
     if (res.data) {
       const csv = answersToCsv(res.data);
+      if (!csv) {
+        return;
+      }
+
       downloadCsv(title, csv);
     }
   }

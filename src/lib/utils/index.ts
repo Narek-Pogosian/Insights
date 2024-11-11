@@ -15,6 +15,10 @@ export function answersToCsv(answers: Response[]) {
   const arr = answers.map(
     (a) => parsePrismaJson(a.answers) as Record<string, string>,
   );
+  if (arr.length === 0) {
+    return;
+  }
+
   const headers = Object.keys(arr[0]!);
 
   csvRows.push(headers.join(","));

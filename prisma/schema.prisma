@@ -10,7 +10,7 @@ datasource db {
 enum Status {
     DRAFT
     PUBLISHED
-    CANCELLED
+    CLOSED
 }
 
 model Survey {

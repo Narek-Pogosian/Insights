@@ -89,7 +89,7 @@ function SurveyBuilder(
   return (
     <div className="mx-auto max-w-3xl">
       <Tabs defaultValue="builder">
-        <div className="sticky top-0 z-50 -mt-4 mb-4 flex flex-col gap-2 bg-background py-2 md:flex-row md:py-3">
+        <div className="sticky top-0 z-50 -mt-2 mb-4 flex flex-col gap-2 bg-background py-2 md:flex-row md:py-3">
           <div className="flex grow gap-1 rounded border bg-background-card p-1 ring-primary has-[:focus-visible]:ring-2">
             <Input
               id="title"
