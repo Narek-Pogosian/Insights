@@ -10,7 +10,7 @@ import { useDragBuilder } from "./hooks/use-dragbuilder";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { toast } from "sonner";
-import { Save } from "lucide-react";
+import { Eye, Hammer, Save } from "lucide-react";
 import { api } from "@/trpc/react";
 import {
   DndContext,
@@ -88,32 +88,39 @@ function SurveyBuilder(
 
   return (
     <div className="mx-auto max-w-3xl">
-      <div className="sticky top-0 z-40 mb-2 flex items-center justify-between gap-2 bg-background py-2">
-        <Input
-          id="title"
-          placeholder="Title of survey"
-          className="bg-background-card"
-          value={state.title}
-          onChange={(e) =>
-            dispatch({ type: "EDIT_TITLE", payload: e.target.value })
-          }
-        />
-        <Button
-          onClick={handleSave}
-          loading={createMutation.isPending || editMutation.isPending}
-        >
-          <Save className="h-4 w-4" /> Save Survey
-        </Button>
-      </div>
       <Tabs defaultValue="builder">
-        <TabsList className="sticky top-[61px] z-40 mb-2 bg-background-input">
-          <TabsTrigger value="builder">Builder</TabsTrigger>
-          <TabsTrigger value="preview">Preview</TabsTrigger>
-        </TabsList>
-        <TabsContent value="builder">
+        <div className="sticky top-0 z-50 -mt-4 flex flex-col gap-x-4 gap-y-2 bg-background py-2 md:flex-row md:py-3">
+          <div className="flex grow gap-1 rounded border bg-background-card p-1 ring-primary has-[:focus-visible]:ring-2">
+            <Input
+              id="title"
+              placeholder="Title of survey"
+              className="border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+              value={state.title}
+              onChange={(e) =>
+                dispatch({ type: "EDIT_TITLE", payload: e.target.value })
+              }
+            />
+            <Button
+              onClick={handleSave}
+              className="right-0 top-0"
+              loading={createMutation.isPending || editMutation.isPending}
+            >
+              <Save className="h-4 w-4" /> Save
+            </Button>
+          </div>
+          <TabsList className="w-fit justify-start bg-background-card">
+            <TabsTrigger value="builder" className="h-full">
+              <Hammer className="mr-2 size-4" /> Builder
+            </TabsTrigger>
+            <TabsTrigger value="preview" className="h-full">
+              <Eye className="mr-2 size-4" /> Preview
+            </TabsTrigger>
+          </TabsList>
+        </div>
+        <TabsContent value="builder" className="px-0.5">
           <SurveyBuilderContent />
         </TabsContent>
-        <TabsContent value="preview">
+        <TabsContent value="preview" className="px-0.5">
           <SurveyRendererPreview survey={state.fields} />
         </TabsContent>
       </Tabs>
@@ -142,7 +149,7 @@ function SurveyBuilderContent() {
         strategy={verticalListSortingStrategy}
       >
         {state.fields.length === 0 ? (
-          <div className="mx-auto mb-8 pt-10 text-center font-medium text-neutral-300 dark:text-neutral-600">
+          <div className="mx-auto mb-8 pt-10 text-center font-medium text-neutral-400 dark:text-neutral-600">
             No field added yet, add a field by clicking below.
           </div>
         ) : (

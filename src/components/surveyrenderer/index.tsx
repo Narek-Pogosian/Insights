@@ -41,7 +41,7 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
 
   if (survey.length === 0) {
     return (
-      <div className="mx-auto mb-8 pt-10 text-center font-medium text-neutral-300 dark:text-neutral-600">
+      <div className="mx-auto mb-8 pt-10 text-center font-medium text-neutral-400 dark:text-neutral-600">
         Empty, no survey to show.
       </div>
     );
