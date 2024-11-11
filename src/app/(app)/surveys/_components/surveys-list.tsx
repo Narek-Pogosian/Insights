@@ -71,7 +71,7 @@ function SurveysList() {
       </div>
 
       {filteredSurvey.length === 0 ? (
-        <div className="mx-auto max-w-lg pt-20 text-center font-medium text-neutral-300 dark:text-neutral-600">
+        <div className="mx-auto max-w-lg pt-20 text-center font-medium text-neutral-400 dark:text-neutral-600">
           <Squirrel className="mx-auto mb-4 size-28" strokeWidth={0.75} />
           Empty. No surveys here.
         </div>

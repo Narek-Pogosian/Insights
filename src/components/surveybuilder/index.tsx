@@ -89,7 +89,7 @@ function SurveyBuilder(
   return (
     <div className="mx-auto max-w-3xl">
       <Tabs defaultValue="builder">
-        <div className="sticky top-0 z-50 -mt-4 flex flex-col gap-x-4 gap-y-2 bg-background py-2 md:flex-row md:py-3">
+        <div className="sticky top-0 z-50 -mt-4 mb-4 flex flex-col gap-2 bg-background py-2 md:flex-row md:py-3">
           <div className="flex grow gap-1 rounded border bg-background-card p-1 ring-primary has-[:focus-visible]:ring-2">
             <Input
               id="title"
@@ -117,10 +117,10 @@ function SurveyBuilder(
             </TabsTrigger>
           </TabsList>
         </div>
-        <TabsContent value="builder" className="px-0.5">
+        <TabsContent value="builder">
           <SurveyBuilderContent />
         </TabsContent>
-        <TabsContent value="preview" className="px-0.5">
+        <TabsContent value="preview">
           <SurveyRendererPreview survey={state.fields} />
         </TabsContent>
       </Tabs>

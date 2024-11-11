@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type SurveySchemaField } from "@/lib/zod/survey-schemas";
 import { useSurveybuilder } from "./hooks/use-surveybuilder";
+import { GripVertical } from "lucide-react";
 import { useSortable } from "@dnd-kit/sortable";
 import { Button } from "../ui/button";
-import { Grip } from "lucide-react";
 import { CSS } from "@dnd-kit/utilities";
 import { cn } from "@/lib/utils";
 import FieldDialog from "./field-dialog";
@@ -15,7 +15,7 @@ type FieldProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
 function Field({ field, className }: FieldProps) {
   const { dispatch } = useSurveybuilder();
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: field.id, data: { type: field.type } });
+    useSortable({ id: field.id, data: { type: "field" } });
 
   function handleRemove() {
     dispatch({
@@ -41,7 +41,7 @@ function Field({ field, className }: FieldProps) {
         className="w-full cursor-grab pb-6 pt-4"
       >
         <CardHeader className="flex flex-col gap-4 p-0 pl-4 sm:flex-row">
-          <Grip className="mt-1 size-5 shrink-0 text-foreground-muted" />
+          <GripVertical className="mt-1.5 size-5 shrink-0 text-foreground-muted" />
           <div className="grow sm:pr-36">
             <CardTitle className="mb-1">{field.label}</CardTitle>
             <p className="font-medium capitalize text-foreground-muted">
