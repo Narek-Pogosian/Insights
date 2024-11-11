@@ -3,7 +3,7 @@ import { parsePrismaJson } from "@/lib/utils";
 import { surveySchema } from "@/lib/zod/survey-schemas";
 import { notFound } from "next/navigation";
 import { api } from "@/trpc/server";
-import SurveyRenderer from "@/components/surveyrenderer";
+import SurveyRendererAnswer from "@/components/surveyrenderer/surveyrenderer-answer";
 
 export async function generateMetadata({
   params,
@@ -45,7 +45,7 @@ async function Survey({ params }: { params: { id: string } }) {
       <h1 className="mb-4 text-center text-2xl font-bold md:text-3xl">
         {survey.title}
       </h1>
-      <SurveyRenderer mode="answer" id={params.id} survey={data} />
+      <SurveyRendererAnswer id={params.id} survey={data} />
     </div>
   );
 }

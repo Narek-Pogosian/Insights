@@ -1,11 +1,17 @@
 "use client";
 
+import SurveyRendererPreview from "../surveyrenderer/surveyrenderer-preview";
+import FieldDialog from "./field-dialog";
+import Field from "./field";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useSurveybuilder } from "./hooks/use-surveybuilder";
 import { useDragBuilder } from "./hooks/use-dragbuilder";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { toast } from "sonner";
 import { Save } from "lucide-react";
+import { api } from "@/trpc/react";
 import {
   DndContext,
   DragOverlay,
@@ -17,12 +23,6 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-
-import FieldDialog from "./field-dialog";
-import Field from "./field";
-import SurveyRenderer from "../surveyrenderer";
-import { api } from "@/trpc/react";
-import { toast } from "sonner";
 
 interface SurveyBuilderProps {
   mode: "create" | "edit";
@@ -114,7 +114,7 @@ function SurveyBuilder(
           <SurveyBuilderContent />
         </TabsContent>
         <TabsContent value="preview">
-          <SurveyRenderer mode="preview" survey={state.fields} />
+          <SurveyRendererPreview survey={state.fields} />
         </TabsContent>
       </Tabs>
     </div>

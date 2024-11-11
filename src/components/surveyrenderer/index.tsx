@@ -20,62 +20,26 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
+import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Checkbox } from "../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { createValidationSchema } from "./create-validation";
-import { toast } from "sonner";
-import { api } from "@/trpc/react";
-import { useRouter } from "next/navigation";
 
 interface SurveyRendererProps {
-  mode: "answer" | "preview";
+  onSubmit: (data: unknown) => void;
   survey: SurveySchema;
+  loading?: boolean;
 }
 
-interface SurveyRendererAnswerProps extends SurveyRendererProps {
-  mode: "answer";
-  id: string;
-}
-
-interface SurveyRendererPreviewProps extends SurveyRendererProps {
-  mode: "preview";
-}
-
-type Props = SurveyRendererAnswerProps | SurveyRendererPreviewProps;
-
-function SurveyRenderer(props: Props) {
-  const schema = createValidationSchema(props.survey);
+function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
+  const schema = createValidationSchema(survey);
   const f = useForm<typeof schema>({
     resolver: zodResolver(schema),
     reValidateMode: "onChange",
   });
 
-  const router = useRouter();
-  const answer = api.response.respond.useMutation();
-  async function onSubmit(data: typeof schema) {
-    if (props.mode === "preview") {
-      toast("Preview survey submitted without errors");
-      return;
-    }
-
-    if (answer.isPending) return;
-    const res = await answer.mutateAsync({
-      surveyId: props.id,
-      answers: JSON.stringify(data),
-    });
-
-    if (res === "Success") {
-      router.replace("/survey/success");
-    }
-
-    if (res === "Answered") {
-      router.replace("/survey/answered");
-    }
-  }
-
-  if (props.survey.length === 0) {
+  if (survey.length === 0) {
     return (
       <div className="mx-auto mb-8 pt-10 text-center font-medium text-neutral-300 dark:text-neutral-600">
         Empty, no survey to show.
@@ -89,7 +53,7 @@ function SurveyRenderer(props: Props) {
         onSubmit={f.handleSubmit(onSubmit)}
         className="mx-auto grid w-full max-w-3xl gap-y-10 py-4"
       >
-        {props.survey.map((formField, i) => {
+        {survey.map((formField, i) => {
           const label = formField.label as keyof typeof schema;
 
           if (formField.type === "text")
@@ -264,7 +228,7 @@ function SurveyRenderer(props: Props) {
             );
         })}
 
-        <Button type="submit" loading={answer.isPending}>
+        <Button type="submit" loading={loading}>
           Submit
         </Button>
       </form>
