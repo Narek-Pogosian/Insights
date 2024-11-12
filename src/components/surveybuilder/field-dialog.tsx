@@ -27,8 +27,8 @@ function FieldDialog({ defaultField }: Props) {
       <DialogTrigger asChild>
         <Button
           size={defaultField ? "sm" : "default"}
-          variant="outline"
-          className={defaultField ? "" : "mt-4 block w-full bg-background-card"}
+          variant={defaultField ? "outline" : "default"}
+          className={defaultField ? "" : "mx-auto mt-8 block px-8"}
         >
           {defaultField ? "Edit" : "Add Field"}
         </Button>

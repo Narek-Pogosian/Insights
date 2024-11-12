@@ -10,7 +10,7 @@ import { useDragBuilder } from "./hooks/use-dragbuilder";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { toast } from "sonner";
-import { Eye, Hammer, Save } from "lucide-react";
+import { ClipboardList, Eye, Hammer, Save } from "lucide-react";
 import { api } from "@/trpc/react";
 import {
   DndContext,
@@ -90,11 +90,11 @@ function SurveyBuilder(
     <div className="mx-auto max-w-3xl">
       <Tabs defaultValue="builder">
         <div className="sticky top-0 z-50 -mt-2 mb-4 flex flex-col gap-2 bg-background py-2 md:flex-row md:py-3">
-          <div className="flex grow gap-1 rounded border bg-background-card p-1 ring-primary has-[:focus-visible]:ring-2">
+          <div className="flex grow gap-1 rounded border bg-background-card p-1 shadow-sm ring-primary has-[:focus-visible]:ring-2 dark:shadow dark:shadow-black">
             <Input
               id="title"
               placeholder="Title of survey"
-              className="border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="border-none bg-transparent font-medium focus-visible:ring-0 focus-visible:ring-offset-0"
               value={state.title}
               onChange={(e) =>
                 dispatch({ type: "EDIT_TITLE", payload: e.target.value })
@@ -108,7 +108,7 @@ function SurveyBuilder(
               <Save className="h-4 w-4" /> Save
             </Button>
           </div>
-          <TabsList className="w-fit justify-start bg-background-card">
+          <TabsList className="w-fit justify-start bg-background-card shadow-sm dark:shadow dark:shadow-black">
             <TabsTrigger value="builder" className="h-full">
               <Hammer className="mr-2 size-4" /> Builder
             </TabsTrigger>
@@ -149,8 +149,16 @@ function SurveyBuilderContent() {
         strategy={verticalListSortingStrategy}
       >
         {state.fields.length === 0 ? (
-          <div className="mx-auto mb-8 pt-10 text-center font-medium text-neutral-400 dark:text-neutral-600">
-            No field added yet, add a field by clicking below.
+          <div className="mx-auto mb-8 pt-10 text-center">
+            <div className="mx-auto mb-4 flex size-20 items-center justify-center rounded-full bg-primary/5">
+              <ClipboardList className="size-10 text-primary" />
+            </div>
+            <h2 className="mb-2 text-xl font-semibold">
+              Start Building Your Survey
+            </h2>
+            <p className="text-sm text-foreground-muted">
+              Create engaging surveys by adding fields
+            </p>
           </div>
         ) : (
           <ul className="space-y-6">

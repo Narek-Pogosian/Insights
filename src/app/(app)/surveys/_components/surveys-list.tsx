@@ -2,7 +2,7 @@
 
 import { type Status } from "@prisma/client";
 import { useMemo, useState } from "react";
-import { PlusCircle, Search, Squirrel } from "lucide-react";
+import { FileQuestion, PlusCircle, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { api } from "@/trpc/react";
@@ -14,7 +14,7 @@ const statusList: { status: Status | ""; label: string }[] = [
   { status: "", label: "All" },
   { status: "PUBLISHED", label: "Published" },
   { status: "DRAFT", label: "Draft" },
-  { status: "CANCELLED", label: "Cancelled" },
+  { status: "CLOSED", label: "Closed" },
 ];
 
 function SurveysList() {
@@ -71,9 +71,14 @@ function SurveysList() {
       </div>
 
       {filteredSurvey.length === 0 ? (
-        <div className="mx-auto max-w-lg pt-20 text-center font-medium text-neutral-400 dark:text-neutral-600">
-          <Squirrel className="mx-auto mb-4 size-28" strokeWidth={0.75} />
-          Empty. No surveys here.
+        <div className="mx-auto mb-8 pt-10 text-center">
+          <div className="mx-auto mb-4 flex size-20 items-center justify-center rounded-full bg-primary/5">
+            <FileQuestion className="size-10 text-primary" />
+          </div>
+          <h2 className="mb-2 text-xl font-semibold">Oops! No Results</h2>
+          <p className="text-sm text-foreground-muted">
+            Try adjusting your filters to find more surveys!
+          </p>
         </div>
       ) : (
         <ul className="grid gap-8 md:grid-cols-2">

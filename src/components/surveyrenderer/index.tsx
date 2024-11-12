@@ -25,7 +25,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { createValidationSchema } from "./create-validation";
-import { Squirrel } from "lucide-react";
+import { FileQuestion } from "lucide-react";
 
 interface SurveyRendererProps {
   onSubmit: (data: unknown) => void;
@@ -42,9 +42,14 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
 
   if (survey.length === 0) {
     return (
-      <div className="mx-auto mb-8 pt-10 text-center font-medium text-neutral-400 dark:text-neutral-600">
-        <Squirrel className="mx-auto mb-4 size-28" strokeWidth={0.75} />
-        Empty, no survey to show.
+      <div className="mx-auto mb-8 pt-10 text-center">
+        <div className="mx-auto mb-4 flex size-20 items-center justify-center rounded-full bg-primary/5">
+          <FileQuestion className="size-10 text-primary" />
+        </div>
+        <h2 className="mb-2 text-xl font-semibold">Your survey is empty.</h2>
+        <p className="text-sm text-foreground-muted">
+          Add some questions to see how they&apos;ll appear to your respondents.
+        </p>
       </div>
     );
   }
