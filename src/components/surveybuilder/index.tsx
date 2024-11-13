@@ -47,8 +47,11 @@ function SurveyBuilder(
     onError: (err) => {
       toast(err.message);
     },
-    onSuccess: async () => {
+    onSuccess: async (data) => {
       toast("New survey created");
+      utils.survey.getAllSurveys.setData(undefined, (oldData) => {
+        return [data, ...oldData!];
+      });
       await utils.survey.getAllSurveys.invalidate();
       dispatch({ type: "RESET" });
     },

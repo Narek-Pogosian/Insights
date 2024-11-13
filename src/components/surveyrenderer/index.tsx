@@ -72,7 +72,9 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base">{label}</FormLabel>
-                    <FormDescription>{formField.description}</FormDescription>
+                    {formField.description && (
+                      <FormDescription>{formField.description}</FormDescription>
+                    )}
                     <FormControl>
                       <Input
                         placeholder={formField.placeholder}
@@ -95,7 +97,9 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base">{label}</FormLabel>
-                    <FormDescription>{formField.description}</FormDescription>
+                    {formField.description && (
+                      <FormDescription>{formField.description}</FormDescription>
+                    )}
                     <FormControl>
                       <Input
                         type="number"
@@ -121,7 +125,9 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base">{label}</FormLabel>
-                    <FormDescription>{formField.description}</FormDescription>
+                    {formField.description && (
+                      <FormDescription>{formField.description}</FormDescription>
+                    )}
                     <FormControl>
                       <Textarea
                         placeholder={formField.placeholder}
@@ -154,7 +160,9 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
                       <FormLabel className="text-base">{label}</FormLabel>
                     </div>
                     <FormMessage />
-                    <FormDescription>{formField.description}</FormDescription>
+                    {formField.description && (
+                      <FormDescription>{formField.description}</FormDescription>
+                    )}
                   </FormItem>
                 )}
               />
@@ -169,7 +177,9 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base">{label}</FormLabel>
-                    <FormDescription>{formField.description}</FormDescription>
+                    {formField.description && (
+                      <FormDescription>{formField.description}</FormDescription>
+                    )}
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value as string}
@@ -206,7 +216,9 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base">{label}</FormLabel>
-                    <FormDescription>{formField.description}</FormDescription>
+                    {formField.description && (
+                      <FormDescription>{formField.description}</FormDescription>
+                    )}
                     <FormControl>
                       <RadioGroup
                         onValueChange={field.onChange}
@@ -235,7 +247,7 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
             );
         })}
 
-        <Button type="submit" loading={loading}>
+        <Button type="submit" className="-mt-4" loading={loading}>
           Submit
         </Button>
       </form>

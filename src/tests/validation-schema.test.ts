@@ -1,4 +1,4 @@
-import { createValidationSchema } from "@/components/surveyrenderer/create-validation";
+import { createValidationSchema } from "../components/surveyrenderer/create-validation";
 import { type SurveySchema } from "@/lib/zod/survey-schemas";
 import { describe, it, expect } from "vitest";
 

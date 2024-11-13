@@ -42,7 +42,7 @@ async function Survey({ params }: { params: { id: string } }) {
 
   return (
     <div className="py-8 md:py-14">
-      <h1 className="mb-4 text-center text-2xl font-bold md:text-3xl">
+      <h1 className="mb-8 text-center text-2xl font-bold md:text-3xl">
         {survey.title}
       </h1>
       <SurveyRendererAnswer id={params.id} survey={data} />
