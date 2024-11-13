@@ -10,7 +10,7 @@ import { Menu } from "lucide-react";
 import { getNavigationList } from "./navigation";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import Signout from "./signout";
+import Signout from "../signout";
 import Logo from "@/components/logo";
 import Link from "next/link";
 

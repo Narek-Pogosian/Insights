@@ -29,7 +29,7 @@ export default function SurveyCard({ survey }: SurveyCardProps) {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-start justify-between">
+        <div className="flex flex-col items-start justify-between gap-2 sm:flex-row">
           <div>
             <CardTitle className="mb-2 text-2xl">{survey.title}</CardTitle>
             <CardDescription className="flex items-center">

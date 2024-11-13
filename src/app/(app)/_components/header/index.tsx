@@ -4,7 +4,7 @@ import MobileSidebar from "./mobile-sidebar";
 import ThemeToggle from "@/components/theme-toggle";
 import Logo from "@/components/logo";
 import Link from "next/link";
-import Signout from "./signout";
+import Signout from "../signout";
 import { getNavigationList } from "./navigation";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -34,7 +34,7 @@ function Header() {
                   )}
                 >
                   <Link
-                    className="hover:bg-background-muted rounded px-3 py-1.5 transition-colors"
+                    className="rounded px-3 py-1.5 transition-colors hover:bg-background-muted"
                     href={item.href}
                   >
                     {item.label}
