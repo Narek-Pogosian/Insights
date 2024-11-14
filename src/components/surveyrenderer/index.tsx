@@ -12,14 +12,6 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
-import { Textarea } from "../ui/textarea";
 import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -116,32 +108,6 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
               />
             );
 
-          if (formField.type === "textarea")
-            return (
-              <FormField
-                key={label + i.toString()}
-                control={f.control}
-                name={label}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-base">{label}</FormLabel>
-                    {formField.description && (
-                      <FormDescription>{formField.description}</FormDescription>
-                    )}
-                    <FormControl>
-                      <Textarea
-                        placeholder={formField.placeholder}
-                        {...field}
-                        rows={4}
-                        value={field.value as string}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            );
-
           if (formField.type === "checkbox")
             return (
               <FormField
@@ -168,46 +134,7 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
               />
             );
 
-          if (formField.type === "select")
-            return (
-              <FormField
-                key={label + i.toString()}
-                control={f.control}
-                name={label}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-base">{label}</FormLabel>
-                    {formField.description && (
-                      <FormDescription>{formField.description}</FormDescription>
-                    )}
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value as string}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={formField.placeholder} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {formField.options.map((option) => (
-                          <SelectItem
-                            value={option.value}
-                            key={option.value}
-                            className="capitalize"
-                          >
-                            {option.value}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            );
-
-          if (formField.type === "radio")
+          if (formField.type === "options")
             return (
               <FormField
                 key={label + i.toString()}

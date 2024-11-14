@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Pencil } from "lucide-react";
 import FieldAdder from "./field-adder";
 
 interface Props {
@@ -26,11 +27,12 @@ function FieldDialog({ defaultField }: Props) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          size={defaultField ? "sm" : "default"}
+          size={defaultField ? "icon" : "default"}
           variant={defaultField ? "outline" : "default"}
-          className={defaultField ? "" : "mx-auto mt-8 block px-8"}
+          className={defaultField ? "size-8" : "mx-auto mt-8 block px-8"}
+          aria-label="Edit field"
         >
-          {defaultField ? "Edit" : "Add Field"}
+          {defaultField ? <Pencil className="!size-4" /> : "Add Field"}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-3xl">

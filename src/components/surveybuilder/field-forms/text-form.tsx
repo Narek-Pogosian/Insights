@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { MAX_LENGTH, textSchema } from "@/lib/zod/survey-schemas";
+import { textSchema } from "@/lib/zod/survey-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -21,8 +21,6 @@ const textFormSchema = textSchema.pick({
   placeholder: true,
   required: true,
   description: true,
-  minLength: true,
-  maxLength: true,
 });
 
 type TextFormSchemaType = z.infer<typeof textFormSchema>;
@@ -38,8 +36,6 @@ function TextForm({ defaultField, handleAdd }: FieldFormProps) {
       placeholder: defaultField?.placeholder ?? "",
       description: defaultField?.description ?? "",
       required: defaultField?.required ?? false,
-      minLength: defaultField?.minLength ?? 0,
-      maxLength: defaultField?.maxLength ?? MAX_LENGTH,
     },
   });
 
@@ -114,46 +110,6 @@ function TextForm({ defaultField, handleAdd }: FieldFormProps) {
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea {...field} placeholder="Optional description" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="minLength"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Minimum length</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  min={0}
-                  max={MAX_LENGTH}
-                  placeholder="0"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="maxLength"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Maximum length</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  min={0}
-                  max={MAX_LENGTH}
-                  placeholder="300"
-                  {...field}
-                />
               </FormControl>
               <FormMessage />
             </FormItem>

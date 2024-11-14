@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type SurveySchemaField } from "@/lib/zod/survey-schemas";
 import { useSurveybuilder } from "./hooks/use-surveybuilder";
-import { GripVertical } from "lucide-react";
+import { GripVertical, Trash2 } from "lucide-react";
 import { useSortable } from "@dnd-kit/sortable";
 import { Button } from "../ui/button";
 import { CSS } from "@dnd-kit/utilities";
@@ -51,10 +51,16 @@ function Field({ field, className }: FieldProps) {
         </CardHeader>
       </div>
 
-      <CardContent className="absolute right-4 flex h-fit w-32 items-center gap-2 p-0 pt-4">
+      <CardContent className="absolute right-4 flex h-fit items-center gap-2 p-0 pt-4">
         <FieldDialog defaultField={field} />
-        <Button onClick={handleRemove} variant="destructive" size="sm">
-          Remove
+        <Button
+          onClick={handleRemove}
+          className="size-8 hover:text-red-600 dark:hover:text-red-400"
+          variant="outline"
+          size="icon"
+        >
+          <Trash2 className="!size-4" />
+          <span className="sr-only">Remove</span>
         </Button>
       </CardContent>
     </Card>

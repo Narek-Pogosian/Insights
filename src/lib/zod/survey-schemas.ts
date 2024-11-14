@@ -1,16 +1,8 @@
 import { z } from "zod";
 
-export const MAX_LENGTH = 300;
-export const MAX_LENGTH_TEXTAREA = 800;
+export const MAX_TEXT_LENGTH = 600;
 
-const FieldTypes = [
-  "text",
-  "number",
-  "textarea",
-  "select",
-  "checkbox",
-  "radio",
-] as const;
+const FieldTypes = ["text", "number", "options", "checkbox"] as const;
 
 const baseSchema = z.object({
   id: z.string(),
@@ -29,8 +21,6 @@ export const textSchema = baseSchema.extend({
     .string()
     .trim()
     .min(1, { message: "A placeholder is required" }),
-  minLength: z.coerce.number().min(0).max(MAX_LENGTH).optional(),
-  maxLength: z.coerce.number().min(0).max(MAX_LENGTH).optional(),
 });
 
 export const numberSchema = baseSchema.extend({
@@ -39,41 +29,12 @@ export const numberSchema = baseSchema.extend({
   max: z.literal("").or(z.coerce.number().optional()),
 });
 
-export const textAreaSchema = baseSchema.extend({
-  type: z.literal("textarea"),
-  placeholder: z
-    .string()
-    .trim()
-    .min(1, { message: "A placeholder is required" }),
-  minLength: z.coerce.number().min(0).max(MAX_LENGTH_TEXTAREA).optional(),
-  maxLength: z.coerce.number().min(0).max(MAX_LENGTH_TEXTAREA).optional(),
-});
-
 export const checkboxSchema = baseSchema.extend({
   type: z.literal("checkbox"),
 });
 
-export const selectSchema = baseSchema.extend({
-  type: z.literal("select"),
-  placeholder: z
-    .string()
-    .trim()
-    .min(1, { message: "A placeholder is required" }),
-
-  options: z
-    .array(
-      z.object({
-        value: z
-          .string()
-          .trim()
-          .min(1, { message: "An option label is required" }),
-      }),
-    )
-    .min(1),
-});
-
-export const radioSchema = baseSchema.extend({
-  type: z.literal("radio"),
+export const optionsSchema = baseSchema.extend({
+  type: z.literal("options"),
   options: z
     .array(
       z.object({
@@ -91,10 +52,8 @@ export const surveySchema = z
     z.discriminatedUnion("type", [
       textSchema,
       numberSchema,
-      textAreaSchema,
-      selectSchema,
       checkboxSchema,
-      radioSchema,
+      optionsSchema,
     ]),
   )
   .min(1, { message: "At least 1 field is required" })

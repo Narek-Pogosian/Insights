@@ -10,16 +10,9 @@ export function createValidationSchema(form: SurveySchema) {
     switch (field.type) {
       case "text":
         fieldSchema = z.string().trim();
-        if (field.minLength) {
-          fieldSchema = fieldSchema.min(field.minLength, {
-            message: `Must be at least ${field.minLength} characters`,
-          });
-        }
-        if (field.maxLength) {
-          fieldSchema = fieldSchema.max(field.maxLength, {
-            message: `Must be at most ${field.maxLength} characters`,
-          });
-        }
+        fieldSchema = fieldSchema.max(600, {
+          message: `Must be at most 600 characters`,
+        });
         if (!field.required) {
           fieldSchema = fieldSchema.optional().or(z.literal(""));
         }
@@ -45,39 +38,7 @@ export function createValidationSchema(form: SurveySchema) {
         }
         break;
 
-      case "textarea":
-        fieldSchema = z.string().trim();
-        if (field.minLength) {
-          fieldSchema = fieldSchema.min(field.minLength, {
-            message: `Must be at least ${field.minLength} characters`,
-          });
-        }
-        if (field.maxLength) {
-          fieldSchema = fieldSchema.max(field.maxLength, {
-            message: `Must be at most ${field.maxLength} characters`,
-          });
-        }
-        if (!field.required) {
-          fieldSchema = fieldSchema.optional().or(z.literal(""));
-        }
-        break;
-
-      case "select":
-        fieldSchema = z
-          .string()
-          .refine((val) => field.options.some((o) => o.value === val), {
-            message: "Invalid option",
-          });
-        if (!field.required) {
-          fieldSchema = fieldSchema.optional().or(z.literal(""));
-        }
-        break;
-
-      case "checkbox":
-        fieldSchema = z.boolean().default(false).optional();
-        break;
-
-      case "radio":
+      case "options":
         fieldSchema = z
           .string()
           .refine((val) => field.options.some((o) => o.value === val), {

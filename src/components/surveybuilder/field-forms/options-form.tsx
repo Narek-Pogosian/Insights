@@ -1,5 +1,5 @@
 import { useFieldArray, useForm } from "react-hook-form";
-import { radioSchema } from "@/lib/zod/survey-schemas";
+import { optionsSchema } from "@/lib/zod/survey-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -16,21 +16,21 @@ import { Textarea } from "@/components/ui/textarea";
 import { type FieldFormProps } from ".";
 import { type z } from "zod";
 
-export const radioFormSchema = radioSchema.pick({
+export const optionsFormSchema = optionsSchema.pick({
   label: true,
   required: true,
   description: true,
   options: true,
 });
 
-type RadioFormSchemaType = z.infer<typeof radioFormSchema>;
+type RadioFormSchemaType = z.infer<typeof optionsFormSchema>;
 
-function RadioForm({ defaultField, handleAdd }: FieldFormProps) {
-  if (defaultField && defaultField.type !== "radio")
+function OptionsForm({ defaultField, handleAdd }: FieldFormProps) {
+  if (defaultField && defaultField.type !== "options")
     throw Error("Need to pass in a radio field to radio form");
 
   const form = useForm<RadioFormSchemaType>({
-    resolver: zodResolver(radioFormSchema),
+    resolver: zodResolver(optionsFormSchema),
     defaultValues: {
       label: defaultField?.label ?? "",
       required: defaultField?.required ?? false,
@@ -47,7 +47,7 @@ function RadioForm({ defaultField, handleAdd }: FieldFormProps) {
   function onSubmit(data: RadioFormSchemaType) {
     const res = handleAdd({
       id: defaultField?.id ?? crypto.randomUUID(),
-      type: "radio",
+      type: "options",
       ...data,
     });
 
@@ -145,4 +145,4 @@ function RadioForm({ defaultField, handleAdd }: FieldFormProps) {
   );
 }
 
-export default RadioForm;
+export default OptionsForm;

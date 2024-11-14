@@ -10,17 +10,13 @@ describe("createValidationSchema", () => {
         type: "text",
         label: "username",
         placeholder: "",
-        minLength: 3,
-        maxLength: 10,
         required: true,
       },
       {
         id: "id",
-        type: "textarea",
+        type: "text",
         label: "bio",
         placeholder: "",
-        minLength: 3,
-        maxLength: 10,
         required: true,
       },
     ];
@@ -125,55 +121,11 @@ describe("createValidationSchema", () => {
     await expect(schema.parseAsync({ consent: false })).resolves.not.toThrow();
   });
 
-  it("should create a schema for 2 select where one is required and checks different inputs", async () => {
-    const survey: SurveySchema = [
-      {
-        id: "id",
-        type: "select",
-        placeholder: "text",
-        label: "select1",
-        required: false,
-        options: [
-          { value: "option1" },
-          { value: "option2" },
-          { value: "option3" },
-        ],
-      },
-      {
-        id: "id",
-        type: "select",
-        placeholder: "text",
-        label: "select2",
-        required: true,
-        options: [
-          { value: "option1" },
-          { value: "option2" },
-          { value: "option3" },
-        ],
-      },
-    ];
-
-    const schema = createValidationSchema(survey);
-
-    expect(schema.shape).toHaveProperty("select1");
-    expect(schema.shape).toHaveProperty("select2");
-
-    await expect(
-      schema.parseAsync({ select1: undefined, select2: "option1" }),
-    ).resolves.not.toThrow();
-    await expect(
-      schema.parseAsync({ select1: "option1", select2: undefined }),
-    ).rejects.toThrow(/Required/);
-    await expect(
-      schema.parseAsync({ select1: "invalid option", select2: undefined }),
-    ).rejects.toThrow(/Invalid option/);
-  });
-
   it("should create a schema for 2 radio groups where one is required and checks different inputs", async () => {
     const survey: SurveySchema = [
       {
         id: "id",
-        type: "radio",
+        type: "options",
         label: "radio1",
         required: false,
         options: [
@@ -184,7 +136,7 @@ describe("createValidationSchema", () => {
       },
       {
         id: "id",
-        type: "radio",
+        type: "options",
         label: "radio2",
         required: true,
         options: [
