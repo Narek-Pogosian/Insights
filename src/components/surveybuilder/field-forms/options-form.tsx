@@ -1,4 +1,4 @@
-import { useFieldArray, useForm } from "react-hook-form";
+import { type Control, useFieldArray, useForm } from "react-hook-form";
 import { optionsSchema } from "@/lib/zod/survey-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -15,6 +15,16 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { type FieldFormProps } from ".";
 import { type z } from "zod";
+import { GripVertical, Trash2 } from "lucide-react";
+import { SortableContext, useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import {
+  type DragEndEvent,
+  DndContext,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 
 export const optionsFormSchema = optionsSchema.omit({ id: true, type: true });
 
@@ -35,7 +45,7 @@ function OptionsForm({ defaultField, handleAdd }: FieldFormProps) {
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, move } = useFieldArray({
     control: form.control,
     name: "options",
   });
@@ -51,6 +61,23 @@ function OptionsForm({ defaultField, handleAdd }: FieldFormProps) {
       form.setError("label", { message: "Every label needs to be unique" });
     }
   }
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 10 } }),
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = fields.findIndex((field) => field.id === active.id);
+      const newIndex = fields.findIndex((field) => field.id === over.id);
+
+      if (oldIndex !== -1 && newIndex !== -1) {
+        move(oldIndex, newIndex);
+      }
+    }
+  };
 
   return (
     <Form {...form}>
@@ -107,42 +134,6 @@ function OptionsForm({ defaultField, handleAdd }: FieldFormProps) {
           />
         </div>
 
-        <div>
-          <FormLabel className="mb-2">Options*</FormLabel>
-          {fields.map((option, index) => (
-            <div key={option.id} className="mb-2 flex items-center gap-2">
-              <FormField
-                control={form.control}
-                name={`options.${index}.value`}
-                render={({ field }) => (
-                  <FormItem className="flex-1">
-                    <FormControl>
-                      <Input placeholder={`Option ${index + 1}`} {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button
-                type="button"
-                variant="destructive"
-                onClick={() => remove(index)}
-              >
-                Remove
-              </Button>
-            </div>
-          ))}
-          <Button
-            type="button"
-            size="sm"
-            variant="outline"
-            className="bg-background-input"
-            onClick={() => append({ value: "" })}
-          >
-            Add Option
-          </Button>
-        </div>
-
         {form.getValues().showDescription && (
           <FormField
             control={form.control}
@@ -159,6 +150,36 @@ function OptionsForm({ defaultField, handleAdd }: FieldFormProps) {
           />
         )}
 
+        <div>
+          <FormLabel className="mb-2">Options*</FormLabel>
+
+          <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+            <SortableContext items={fields.map((field) => field.id)}>
+              <ul className="space-y-3">
+                {fields.map((option, index) => (
+                  <SortableItem
+                    key={option.id}
+                    id={option.id}
+                    index={index}
+                    remove={remove}
+                    control={form.control}
+                  />
+                ))}
+              </ul>
+            </SortableContext>
+          </DndContext>
+
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="mt-2 bg-background-input"
+            onClick={() => append({ value: "" })}
+          >
+            Add Option
+          </Button>
+        </div>
+
         <Button className="mt-4" type="submit">
           {defaultField ? "Edit" : "Add"}
         </Button>
@@ -168,3 +189,55 @@ function OptionsForm({ defaultField, handleAdd }: FieldFormProps) {
 }
 
 export default OptionsForm;
+
+const SortableItem = ({
+  id,
+  index,
+  remove,
+  control,
+}: {
+  id: string;
+  index: number;
+  remove: (index: number) => void;
+  control: Control<RadioFormSchemaType>;
+}) => {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+
+  return (
+    <li
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
+      style={{
+        transition,
+        transform: CSS.Translate.toString(transform),
+        touchAction: "none",
+      }}
+      className="flex cursor-grab items-start gap-1"
+    >
+      <GripVertical className="mt-2 size-5 text-foreground-muted" />
+      <FormField
+        control={control}
+        name={`options.${index}.value`}
+        render={({ field }) => (
+          <FormItem className="flex-1">
+            <FormControl>
+              <Input placeholder={`Option ${index + 1}`} {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <Button
+        size="icon"
+        type="button"
+        className="size-[38px]"
+        variant="destructive"
+        onClick={() => remove(index)}
+      >
+        <Trash2 />
+      </Button>
+    </li>
+  );
+};
