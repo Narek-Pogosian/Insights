@@ -42,7 +42,7 @@ function FieldAdder({ defaultField, closeDialog }: Props) {
         {Object.entries(fieldForms).map(([type, value]) => (
           <li key={type}>
             <Button
-              className="size-28 flex-col gap-2"
+              className="gap-2"
               variant="outline"
               onClick={() => setFieldType(type as FieldType)}
             >

@@ -10,8 +10,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { type FieldFormProps } from ".";
 import { type z } from "zod";
@@ -57,13 +57,13 @@ function NumberForm({ defaultField, handleAdd }: FieldFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid w-full gap-4"
+        className="grid w-full grid-cols-2 gap-5"
       >
         <FormField
           control={form.control}
           name="label"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="col-span-2">
               <FormLabel>Label*</FormLabel>
               <FormControl>
                 <Input placeholder="Age" {...field} />
@@ -77,28 +77,14 @@ function NumberForm({ defaultField, handleAdd }: FieldFormProps) {
           control={form.control}
           name="required"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-1">
+            <FormItem className="col-span-2 flex items-center gap-1">
               <FormControl>
-                <Checkbox
+                <Switch
                   checked={field.value}
                   onCheckedChange={field.onChange}
                 />
               </FormControl>
-              <FormLabel>Required</FormLabel>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea {...field} placeholder="Optional description" />
-              </FormControl>
+              <FormLabel className="mb-0">Required</FormLabel>
               <FormMessage />
             </FormItem>
           )}
@@ -117,7 +103,6 @@ function NumberForm({ defaultField, handleAdd }: FieldFormProps) {
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="max"
@@ -132,7 +117,23 @@ function NumberForm({ defaultField, handleAdd }: FieldFormProps) {
           )}
         />
 
-        <Button type="submit">{defaultField ? "Edit" : "Add"}</Button>
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem className="col-span-2">
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea {...field} placeholder="Optional description" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button className="col-span-2" type="submit">
+          {defaultField ? "Edit" : "Add"}
+        </Button>
       </form>
     </Form>
   );

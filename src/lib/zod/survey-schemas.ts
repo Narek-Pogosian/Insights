@@ -17,6 +17,7 @@ const baseSchema = z.object({
 
 export const textSchema = baseSchema.extend({
   type: z.literal("text"),
+  longText: z.boolean(),
   placeholder: z
     .string()
     .trim()

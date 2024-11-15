@@ -35,9 +35,11 @@ function FieldDialog({ defaultField }: Props) {
           {defaultField ? <Pencil className="!size-4" /> : "Add Field"}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-3xl">
+      <DialogContent className="max-w-xl">
         <DialogHeader>
-          <DialogTitle>{defaultField ? "Edit field" : "Add field"}</DialogTitle>
+          <DialogTitle className="text-center">
+            {defaultField ? "Edit field" : "Add field"}
+          </DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <FieldAdder defaultField={defaultField} closeDialog={closeDialog} />

@@ -11,16 +11,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { type FieldFormProps } from ".";
 import { type z } from "zod";
+import { Switch } from "@/components/ui/switch";
 
 const textFormSchema = textSchema.pick({
   label: true,
   placeholder: true,
   required: true,
   description: true,
+  longText: true,
 });
 
 type TextFormSchemaType = z.infer<typeof textFormSchema>;
@@ -55,7 +56,7 @@ function TextForm({ defaultField, handleAdd }: FieldFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid w-full gap-4"
+        className="grid w-full gap-5"
       >
         <FormField
           control={form.control}
@@ -91,12 +92,12 @@ function TextForm({ defaultField, handleAdd }: FieldFormProps) {
           render={({ field }) => (
             <FormItem className="flex items-center gap-1">
               <FormControl>
-                <Checkbox
+                <Switch
                   checked={field.value}
                   onCheckedChange={field.onChange}
                 />
               </FormControl>
-              <FormLabel>Required</FormLabel>
+              <FormLabel className="mb-0">Required</FormLabel>
               <FormMessage />
             </FormItem>
           )}
