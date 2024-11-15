@@ -16,14 +16,7 @@ import { type FieldFormProps } from ".";
 import { type z } from "zod";
 import { Switch } from "@/components/ui/switch";
 
-const textFormSchema = textSchema.pick({
-  label: true,
-  placeholder: true,
-  required: true,
-  description: true,
-  longText: true,
-});
-
+const textFormSchema = textSchema.omit({ id: true, type: true });
 type TextFormSchemaType = z.infer<typeof textFormSchema>;
 
 function TextForm({ defaultField, handleAdd }: FieldFormProps) {
@@ -37,6 +30,8 @@ function TextForm({ defaultField, handleAdd }: FieldFormProps) {
       placeholder: defaultField?.placeholder ?? "",
       description: defaultField?.description ?? "",
       required: defaultField?.required ?? false,
+      showDescription: defaultField?.showDescription ?? false,
+      longAnswer: defaultField?.longAnswer ?? false,
     },
   });
 
@@ -56,7 +51,7 @@ function TextForm({ defaultField, handleAdd }: FieldFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid w-full gap-5"
+        className="grid w-full gap-6"
       >
         <FormField
           control={form.control}
@@ -86,36 +81,72 @@ function TextForm({ defaultField, handleAdd }: FieldFormProps) {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="required"
-          render={({ field }) => (
-            <FormItem className="flex items-center gap-1">
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <FormLabel className="mb-0">Required</FormLabel>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-8">
+          <FormField
+            control={form.control}
+            name="required"
+            render={({ field }) => (
+              <FormItem className="flex items-center gap-1">
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel className="mb-0">Required</FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="longAnswer"
+            render={({ field }) => (
+              <FormItem className="flex items-center gap-1">
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel className="mb-0">Long Answer</FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="showDescription"
+            render={({ field }) => (
+              <FormItem className="flex items-center gap-1">
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel className="mb-0">Show Description</FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea {...field} placeholder="Optional description" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {form.getValues().showDescription && (
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea {...field} placeholder="Optional description" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
 
         <Button type="submit">{defaultField ? "Edit" : "Add"}</Button>
       </form>

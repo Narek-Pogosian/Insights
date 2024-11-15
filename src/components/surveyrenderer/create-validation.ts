@@ -49,6 +49,10 @@ export function createValidationSchema(form: SurveySchema) {
         }
         break;
 
+      case "checkbox":
+        fieldSchema = z.boolean();
+        break;
+
       default:
         throw new Error(`Unsupported field type`);
     }

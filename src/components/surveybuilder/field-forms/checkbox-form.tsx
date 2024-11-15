@@ -14,13 +14,9 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { type FieldFormProps } from ".";
 import { type z } from "zod";
+import { Switch } from "@/components/ui/switch";
 
-const checkboxFormSchema = checkboxSchema.pick({
-  label: true,
-  required: true,
-  description: true,
-});
-
+const checkboxFormSchema = checkboxSchema.omit({ id: true, type: true });
 type CheckboxFormSchemaType = z.infer<typeof checkboxFormSchema>;
 
 function TextForm({ defaultField, handleAdd }: FieldFormProps) {
@@ -33,6 +29,7 @@ function TextForm({ defaultField, handleAdd }: FieldFormProps) {
       label: defaultField?.label ?? "",
       description: defaultField?.description ?? "",
       required: false,
+      showDescription: defaultField?.showDescription ?? false,
     },
   });
 
@@ -68,19 +65,56 @@ function TextForm({ defaultField, handleAdd }: FieldFormProps) {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea {...field} placeholder="Optional description" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-8">
+          <FormField
+            control={form.control}
+            name="required"
+            render={({ field }) => (
+              <FormItem className="col-span-2 flex items-center gap-1">
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel className="mb-0">Required</FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="showDescription"
+            render={({ field }) => (
+              <FormItem className="flex items-center gap-1">
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel className="mb-0">Show Description</FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {form.getValues().showDescription && (
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea {...field} placeholder="Optional description" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
 
         <Button type="submit">{defaultField ? "Edit" : "Add"}</Button>
       </form>

@@ -18,6 +18,7 @@ import { Input } from "../ui/input";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { createValidationSchema } from "./create-validation";
 import { FileQuestion } from "lucide-react";
+import { Textarea } from "../ui/textarea";
 
 interface SurveyRendererProps {
   onSubmit: (data: unknown) => void;
@@ -26,6 +27,7 @@ interface SurveyRendererProps {
 }
 
 function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
+  console.log(survey);
   const schema = createValidationSchema(survey);
   const f = useForm<typeof schema>({
     resolver: zodResolver(schema),
@@ -64,15 +66,23 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base">{label}</FormLabel>
-                    {formField.description && (
+                    {formField.showDescription && formField.description && (
                       <FormDescription>{formField.description}</FormDescription>
                     )}
                     <FormControl>
-                      <Input
-                        placeholder={formField.placeholder}
-                        {...field}
-                        value={(field.value as string) ?? ""}
-                      />
+                      {formField.longAnswer ? (
+                        <Textarea
+                          placeholder={formField.placeholder}
+                          {...field}
+                          value={(field.value as string) ?? ""}
+                        />
+                      ) : (
+                        <Input
+                          placeholder={formField.placeholder}
+                          {...field}
+                          value={(field.value as string) ?? ""}
+                        />
+                      )}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -89,7 +99,7 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base">{label}</FormLabel>
-                    {formField.description && (
+                    {formField.showDescription && formField.description && (
                       <FormDescription>{formField.description}</FormDescription>
                     )}
                     <FormControl>
@@ -123,10 +133,10 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
-                      <FormLabel className="text-base">{label}</FormLabel>
+                      <FormLabel className="mb-0 text-base">{label}</FormLabel>
                     </div>
                     <FormMessage />
-                    {formField.description && (
+                    {formField.showDescription && formField.description && (
                       <FormDescription>{formField.description}</FormDescription>
                     )}
                   </FormItem>
@@ -143,7 +153,7 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base">{label}</FormLabel>
-                    {formField.description && (
+                    {formField.showDescription && formField.description && (
                       <FormDescription>{formField.description}</FormDescription>
                     )}
                     <FormControl>

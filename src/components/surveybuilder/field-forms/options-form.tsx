@@ -16,12 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { type FieldFormProps } from ".";
 import { type z } from "zod";
 
-export const optionsFormSchema = optionsSchema.pick({
-  label: true,
-  required: true,
-  description: true,
-  options: true,
-});
+export const optionsFormSchema = optionsSchema.omit({ id: true, type: true });
 
 type RadioFormSchemaType = z.infer<typeof optionsFormSchema>;
 
@@ -36,6 +31,7 @@ function OptionsForm({ defaultField, handleAdd }: FieldFormProps) {
       required: defaultField?.required ?? false,
       options: defaultField?.options ?? [{ value: "" }],
       description: defaultField?.description ?? "",
+      showDescription: defaultField?.showDescription ?? false,
     },
   });
 
@@ -76,36 +72,40 @@ function OptionsForm({ defaultField, handleAdd }: FieldFormProps) {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="required"
-          render={({ field }) => (
-            <FormItem className="flex items-center gap-1">
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <FormLabel className="mb-0">Required</FormLabel>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea {...field} placeholder="Optional description" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-8">
+          <FormField
+            control={form.control}
+            name="required"
+            render={({ field }) => (
+              <FormItem className="col-span-2 flex items-center gap-1">
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel className="mb-0">Required</FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="showDescription"
+            render={({ field }) => (
+              <FormItem className="flex items-center gap-1">
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel className="mb-0">Show Description</FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <div>
           <FormLabel className="mb-2">Options*</FormLabel>
@@ -132,10 +132,32 @@ function OptionsForm({ defaultField, handleAdd }: FieldFormProps) {
               </Button>
             </div>
           ))}
-          <Button type="button" onClick={() => append({ value: "" })}>
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="bg-background-input"
+            onClick={() => append({ value: "" })}
+          >
             Add Option
           </Button>
         </div>
+
+        {form.getValues().showDescription && (
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea {...field} placeholder="Optional description" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
 
         <Button className="mt-4" type="submit">
           {defaultField ? "Edit" : "Add"}

@@ -7,6 +7,7 @@ const FieldTypes = ["text", "number", "options", "checkbox"] as const;
 const baseSchema = z.object({
   id: z.string(),
   type: z.enum(FieldTypes),
+  showDescription: z.boolean(),
   description: z.string().optional(),
   label: z
     .string()
@@ -17,7 +18,7 @@ const baseSchema = z.object({
 
 export const textSchema = baseSchema.extend({
   type: z.literal("text"),
-  longText: z.boolean(),
+  longAnswer: z.boolean(),
   placeholder: z
     .string()
     .trim()
