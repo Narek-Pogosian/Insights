@@ -13,7 +13,11 @@ export function createValidationSchema(form: SurveySchema) {
         fieldSchema = fieldSchema.max(600, {
           message: `Must be at most 600 characters`,
         });
-        if (!field.required) {
+        if (field.required) {
+          fieldSchema = fieldSchema.min(1, {
+            message: "This field is required",
+          });
+        } else {
           fieldSchema = fieldSchema.optional().or(z.literal(""));
         }
         break;
@@ -30,7 +34,11 @@ export function createValidationSchema(form: SurveySchema) {
             message: `Must be at most ${field.max}`,
           });
         }
-        if (!field.required) {
+        if (field.required) {
+          fieldSchema = fieldSchema.refine((val) => !isNaN(val), {
+            message: "This field is required and must be a valid number",
+          });
+        } else {
           fieldSchema = z
             .literal("")
             .transform(() => undefined)
@@ -51,6 +59,11 @@ export function createValidationSchema(form: SurveySchema) {
 
       case "checkbox":
         fieldSchema = z.boolean();
+        if (field.required) {
+          fieldSchema = fieldSchema.refine((val) => val === true, {
+            message: "This field is required",
+          });
+        }
         break;
 
       default:
