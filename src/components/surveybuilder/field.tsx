@@ -38,12 +38,12 @@ function Field({ field, className }: FieldProps) {
         {...attributes}
         {...listeners}
         role="button"
-        className="w-full cursor-grab pb-6 pt-4"
+        className="w-full cursor-grab py-6"
       >
-        <CardHeader className="flex flex-col gap-4 p-0 pl-4 sm:flex-row">
-          <GripVertical className="mt-1.5 size-5 shrink-0 text-foreground-muted" />
-          <div className="grow sm:pr-36">
-            <CardTitle className="mb-1">{field.label}</CardTitle>
+        <CardHeader className="flex flex-col gap-4 space-y-0 p-0 pl-4 sm:flex-row">
+          <GripVertical className="mt-0.5 shrink-0 text-foreground-muted" />
+          <div className="grow sm:pr-24">
+            <CardTitle className="mb-1 text-base">{field.label}</CardTitle>
             <p className="font-medium capitalize text-foreground-muted">
               {field.type}
             </p>
@@ -51,7 +51,7 @@ function Field({ field, className }: FieldProps) {
         </CardHeader>
       </div>
 
-      <CardContent className="absolute right-4 flex h-fit items-center gap-2 p-0 pt-4">
+      <CardContent className="absolute right-4 top-6 flex h-fit items-center gap-2 p-0">
         <FieldDialog defaultField={field} />
         <Button
           onClick={handleRemove}

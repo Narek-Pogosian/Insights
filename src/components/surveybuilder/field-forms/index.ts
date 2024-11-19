@@ -4,7 +4,9 @@ import {
 } from "@/lib/zod/survey-schemas";
 import {
   CircleCheckBig,
+  Link2,
   ListTodo,
+  Mail,
   Sigma,
   Type,
   type LucideIcon,
@@ -13,6 +15,8 @@ import TextForm from "./text-form";
 import NumberForm from "./number-form";
 import OptionsForm from "./options-form";
 import CheckboxForm from "./checkbox-form";
+import EmailForm from "./email-form";
+import UrlForm from "./url-form";
 
 export type FieldFormProps = {
   defaultField?: SurveySchemaField;
@@ -32,4 +36,6 @@ export const fieldForms: FieldForms = {
   number: { form: NumberForm, icon: Sigma, label: "Number" },
   options: { form: OptionsForm, icon: ListTodo, label: "Multi Options" },
   checkbox: { form: CheckboxForm, icon: CircleCheckBig, label: "Checkbox" },
+  email: { form: EmailForm, icon: Mail, label: "Email" },
+  url: { form: UrlForm, icon: Link2, label: "URL" },
 };

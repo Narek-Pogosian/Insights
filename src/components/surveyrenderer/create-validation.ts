@@ -22,6 +22,40 @@ export function createValidationSchema(form: SurveySchema) {
         }
         break;
 
+      case "email":
+        fieldSchema = z.string().trim().email();
+        fieldSchema = fieldSchema.max(600, {
+          message: `Must be at most 600 characters`,
+        });
+        if (field.required) {
+          fieldSchema = fieldSchema.min(1, {
+            message: "This field is required",
+          });
+        } else {
+          fieldSchema = fieldSchema.optional().or(z.literal(""));
+        }
+        break;
+
+      case "url":
+        fieldSchema = z
+          .string()
+          .trim()
+          .regex(
+            /\b(?:https?|ftp):\/\/(?:www\.)?([a-zA-Z0-9-]+\.[a-zA-Z]{2,})(?:\/[^\s]*)?|\b(?:www\.)?([a-zA-Z0-9-]+\.[a-zA-Z]{2,})(?:\/[^\s]*)?\b/,
+            "Invalid URL",
+          );
+        fieldSchema = fieldSchema.max(600, {
+          message: `Must be at most 600 characters`,
+        });
+        if (field.required) {
+          fieldSchema = fieldSchema.min(1, {
+            message: "This field is required",
+          });
+        } else {
+          fieldSchema = fieldSchema.optional().or(z.literal(""));
+        }
+        break;
+
       case "number":
         fieldSchema = z.coerce.number({ message: "Must be a number" });
         if (field.min) {

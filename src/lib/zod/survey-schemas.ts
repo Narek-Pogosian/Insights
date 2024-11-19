@@ -2,7 +2,14 @@ import { z } from "zod";
 
 export const MAX_TEXT_LENGTH = 600;
 
-const FieldTypes = ["text", "number", "options", "checkbox"] as const;
+const FieldTypes = [
+  "text",
+  "number",
+  "options",
+  "checkbox",
+  "email",
+  "url",
+] as const;
 
 const baseSchema = z.object({
   id: z.string(),
@@ -31,6 +38,16 @@ export const numberSchema = baseSchema.extend({
   max: z.literal("").or(z.coerce.number().optional()),
 });
 
+export const emailSchema = baseSchema.extend({
+  type: z.literal("email"),
+  placeholder: z.string().trim().optional(),
+});
+
+export const urlSchema = baseSchema.extend({
+  type: z.literal("url"),
+  placeholder: z.string().trim().optional(),
+});
+
 export const checkboxSchema = baseSchema.extend({
   type: z.literal("checkbox"),
 });
@@ -53,6 +70,8 @@ export const surveySchema = z
   .array(
     z.discriminatedUnion("type", [
       textSchema,
+      emailSchema,
+      urlSchema,
       numberSchema,
       checkboxSchema,
       optionsSchema,

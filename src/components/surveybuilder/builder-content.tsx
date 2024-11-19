@@ -46,7 +46,7 @@ export default function BuilderContent() {
             </p>
           </div>
         ) : (
-          <ul className="mx-auto max-w-xl space-y-6">
+          <ul className="space-y-6">
             {state.fields.map((f) => (
               <Field
                 key={f.id}

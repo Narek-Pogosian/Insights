@@ -27,7 +27,6 @@ interface SurveyRendererProps {
 }
 
 function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
-  console.log(survey);
   const schema = createValidationSchema(survey);
   const f = useForm<typeof schema>({
     resolver: zodResolver(schema),
@@ -83,6 +82,58 @@ function SurveyRenderer({ onSubmit, survey, loading }: SurveyRendererProps) {
                           value={(field.value as string) ?? ""}
                         />
                       )}
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            );
+
+          if (formField.type === "email")
+            return (
+              <FormField
+                key={label + i.toString()}
+                control={f.control}
+                name={label}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-base">{label}</FormLabel>
+                    {formField.showDescription && formField.description && (
+                      <FormDescription>{formField.description}</FormDescription>
+                    )}
+                    <FormControl>
+                      <Input
+                        // eslint-disable-next-line
+                        placeholder={formField.placeholder || "Your answer"}
+                        {...field}
+                        value={(field.value as string) ?? ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            );
+
+          if (formField.type === "url")
+            return (
+              <FormField
+                key={label + i.toString()}
+                control={f.control}
+                name={label}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-base">{label}</FormLabel>
+                    {formField.showDescription && formField.description && (
+                      <FormDescription>{formField.description}</FormDescription>
+                    )}
+                    <FormControl>
+                      <Input
+                        // eslint-disable-next-line
+                        placeholder={formField.placeholder || "Your answer"}
+                        {...field}
+                        value={(field.value as string) ?? ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
