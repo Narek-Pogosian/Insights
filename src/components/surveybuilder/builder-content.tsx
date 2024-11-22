@@ -34,7 +34,7 @@ export default function BuilderContent() {
         strategy={verticalListSortingStrategy}
       >
         {state.fields.length === 0 ? (
-          <div className="mx-auto mb-8 pt-10 text-center">
+          <div className="mx-auto mb-8 pt-16 text-center">
             <div className="mx-auto mb-4 flex size-20 items-center justify-center rounded-full bg-primary/5">
               <ClipboardList className="size-10 text-primary" />
             </div>

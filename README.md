@@ -15,7 +15,3 @@ Welcome to **Insights**, this app empowers users to easily create, share, and co
 - **Database**: [MongoDB](https://www.mongodb.com/)
 - **Authentication**: [Next Auth](https://next-auth.js.org/)
 - **Dnd**: [dnd kit](https://dndkit.com/)
-
-## 🌟 Project Status
-
-This project is currently inactive as I have chosen to shift my focus towards exploring technologies beyond Next.js and React. Throughout the development of this project, I have gained significant insights and proficiency with Next.js.

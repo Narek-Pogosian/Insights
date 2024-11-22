@@ -1,16 +1,16 @@
-import DashboardContent from "./_components/dashboard-content";
-import PageTitle from "./_components/page-title";
 import { api, HydrateClient } from "@/trpc/server";
+import PageTitle from "./_components/page-title";
+import SurveysList from "./surveys/_components/surveys-list";
 
-function DashboardPage() {
+function Surveys() {
   void api.survey.getAllSurveys.prefetch();
 
   return (
     <HydrateClient>
-      <PageTitle>Dashboard</PageTitle>
-      <DashboardContent />
+      <PageTitle>Your Surveys</PageTitle>
+      <SurveysList />
     </HydrateClient>
   );
 }
 
-export default DashboardPage;
+export default Surveys;

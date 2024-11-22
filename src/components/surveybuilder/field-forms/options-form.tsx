@@ -232,7 +232,7 @@ const SortableItem = ({
       <Button
         size="icon"
         type="button"
-        className="size-[38px]"
+        className="ml-1 size-[38px]"
         variant="destructive"
         onClick={() => remove(index)}
       >
