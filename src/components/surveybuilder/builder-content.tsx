@@ -14,6 +14,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import TemplatesDialog from "./templates-dialog";
 
 export default function BuilderContent() {
   const { state } = useSurveybuilder();
@@ -63,7 +64,10 @@ export default function BuilderContent() {
           className="shadow-lg dark:shadow-black/40"
         />
       </DragOverlay>
-      <FieldDialog />
+      <div className="mt-8 flex flex-col items-center gap-4 [&>button]:w-fit">
+        {state.fields.length === 0 && <TemplatesDialog />}
+        <FieldDialog />
+      </div>
     </DndContext>
   );
 }

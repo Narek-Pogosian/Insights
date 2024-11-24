@@ -41,8 +41,8 @@ async function Survey({ params }: { params: { id: string } }) {
   if (!data || !success) notFound();
 
   return (
-    <div className="py-8 md:py-14">
-      <h1 className="mb-8 text-center text-2xl font-bold md:text-3xl">
+    <div className="py-8 md:py-10">
+      <h1 className="mb-10 text-center text-2xl font-bold md:text-3xl">
         {survey.title}
       </h1>
       <SurveyRendererAnswer id={params.id} survey={data} />

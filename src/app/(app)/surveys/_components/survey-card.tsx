@@ -31,7 +31,7 @@ export default function SurveyCard({ survey }: SurveyCardProps) {
       <CardHeader>
         <div className="flex flex-col items-start justify-between gap-2 sm:flex-row">
           <div>
-            <CardTitle className="mb-2 text-2xl">{survey.title}</CardTitle>
+            <CardTitle className="mb-2 text-xl">{survey.title}</CardTitle>
             <CardDescription className="flex items-center">
               <Calendar className="mr-2 h-4 w-4" />
               Created on {survey.createdAt.toDateString()}

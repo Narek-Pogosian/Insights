@@ -1,6 +1,6 @@
 import { type BuilderProps } from ".";
 import { useSurveybuilder } from "./hooks/use-surveybuilder";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { toast } from "sonner";
@@ -58,6 +58,10 @@ export default function SurveyBuilderSettings(props: BuilderProps) {
       });
     }
   }
+
+  useEffect(() => {
+    setTitle(state.title);
+  }, [state.title]);
 
   return (
     <form

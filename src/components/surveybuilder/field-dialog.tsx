@@ -29,7 +29,7 @@ function FieldDialog({ defaultField }: Props) {
         <Button
           size={defaultField ? "icon" : "default"}
           variant={defaultField ? "outline" : "default"}
-          className={defaultField ? "size-8" : "mx-auto mt-8 block px-8"}
+          className={defaultField ? "size-8" : "px-8"}
           aria-label="Edit field"
         >
           {defaultField ? <Pencil className="!size-4" /> : "Add Field"}
