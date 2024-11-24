@@ -3,7 +3,7 @@ function HeroImage() {
     <>
       <div
         aria-hidden
-        className="absolute right-0 top-0 z-[-1] opacity-30 lg:opacity-100"
+        className="absolute right-0 top-0 -z-50 opacity-30 lg:opacity-100"
       >
         <svg
           width="450"

@@ -49,7 +49,7 @@ function TextForm({ defaultField, handleAdd }: FieldFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid w-full gap-5"
+        className="grid w-full gap-6"
       >
         <FormField
           control={form.control}

@@ -17,7 +17,7 @@
     --foreground-muted: 240 8% 45%;
 
     --scrollbar: 240 10% 82%;
-    --border: 240 8% 92%;
+    --border: 240 8% 93%;
     --ring: 240 10% 3.9%;
 
     --radius: 6px;
@@ -36,7 +36,7 @@
     --foreground-muted: 240 4% 55%;
 
     --scrollbar: 240, 8%, 23%;
-    --border: 240 4% 17%;
+    --border: 240 4% 13%;
     --ring: 240 10% 97.9%;
   }
 }
