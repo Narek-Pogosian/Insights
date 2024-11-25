@@ -3,11 +3,13 @@ import { Button } from "@/components/ui/button";
 import DemoSignin from "./_components/demo-signin";
 import Header from "./_components/header";
 import Link from "next/link";
+import HeroImage from "./_components/hero-image";
 
 async function LandingPage() {
   return (
     <>
       <Header />
+      <HeroImage />
       <section className="container min-h-screen pt-36 lg:pt-48">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
@@ -77,18 +79,27 @@ async function LandingPage() {
           </h2>
           <div className="grid items-start gap-6 lg:grid-cols-3 lg:gap-12">
             <div className="flex flex-col items-center gap-2 rounded border bg-background-card p-8">
+              <div className="mb-2 size-10 content-center rounded-full bg-primary text-center text-lg font-bold text-primary-foreground">
+                1
+              </div>
               <h3 className="text-xl font-bold">Create Your Survey</h3>
               <p className="text-center text-foreground-muted">
                 Design your survey using our easy-to-use builder
               </p>
             </div>
             <div className="flex flex-col items-center gap-2 rounded border bg-background-card p-8">
+              <div className="mb-2 size-10 content-center rounded-full bg-primary text-center text-lg font-bold text-primary-foreground">
+                2
+              </div>
               <h3 className="text-xl font-bold">Share with Your Audience</h3>
               <p className="text-center text-foreground-muted">
                 Distribute your survey via a link or embed it on your site
               </p>
             </div>
             <div className="flex flex-col items-center gap-2 rounded border bg-background-card p-8">
+              <div className="mb-2 size-10 content-center rounded-full bg-primary text-center text-lg font-bold text-primary-foreground">
+                1
+              </div>
               <h3 className="text-xl font-bold">Analyze Results</h3>
               <p className="text-center text-foreground-muted">
                 View responses in real-time and export as CSV for deeper

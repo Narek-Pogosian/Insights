@@ -27,7 +27,7 @@ function SharePopover({ id }: { id: string }) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="icon" title="Share">
           <Share2 className="h-4 w-4" />
           <span className="sr-only">Share survey</span>
         </Button>
