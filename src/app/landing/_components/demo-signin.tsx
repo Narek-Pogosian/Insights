@@ -11,6 +11,7 @@ function DemoSignin() {
 
   async function handleClick() {
     if (isLoading) return;
+    router.prefetch("/");
 
     try {
       setIsLoading(true);
